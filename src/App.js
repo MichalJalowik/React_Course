@@ -4,15 +4,22 @@ import Person from "./Person/Person"
 
 //ES6 way
 const app = (props) => {
+
   const [personsState, setPersonsState] = useState({
     persons: [
       {name: 'max', age: 28},
       {name: 'manu', age: 3},
       {name: 'micg', age: 54}
-    ]
+    ],
+    otherState: 'some other value',
+
   });
 
   const [otherState, setOtherState] = useState('some thing');
+
+  const [getShowPersons, setShowPersons] = useState({
+    showPersons: false
+  });
 
   console.log(personsState, otherState);
 
@@ -43,24 +50,36 @@ const app = (props) => {
   })
   }
 
+  const trogglePersonsHandler = () => {
+      const doesShow = getShowPersons.showPersons;
+      setShowPersons({showPersons: !doesShow});
+  }
+
 
       return (
         <div className="App">
          <h1>hi!!</h1>
          <p>it works!</p>
-         <button style={style} onClick={() => swithNameHandler()}>switch name</button>
-         <Person 
-         name={personsState.persons[0].name} 
-         age={personsState.persons[0].age}
-         click={swithNameHandler.bind(this, 'BIND !')}> MY HOBBIES: RACING1</Person>
-         <Person 
-         name={personsState.persons[1].name} 
-         age={personsState.persons[1].age}
-         changed2={nameChangerHandler}></Person>
-         <Person 
-         name={personsState.persons[2].name} 
-         age={personsState.persons[2].age}> 
-         MY HOBBIES: RACING</Person>
+         <button style={style} onClick={trogglePersonsHandler}>Show persons</button>
+
+        { getShowPersons.showPersons === true ?
+          <div >
+        <Person 
+        name={personsState.persons[0].name} 
+        age={personsState.persons[0].age}
+        click={swithNameHandler.bind(this, 'BIND !')}> MY HOBBIES: RACING1</Person>
+        <Person 
+        name={personsState.persons[1].name} 
+        age={personsState.persons[1].age}
+        changed2={nameChangerHandler}></Person>
+        <Person 
+        name={personsState.persons[2].name} 
+        age={personsState.persons[2].age}> 
+        MY HOBBIES: RACING</Person>
+        </div> : null
+      }
+
+         
         </div>
       );
       //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
