@@ -56,30 +56,34 @@ const app = (props) => {
   }
 
 
+  let persons = null;
+
+  if (getShowPersons.showPersons) {
+    persons = (
+      <div >
+      <Person 
+      name={personsState.persons[0].name} 
+      age={personsState.persons[0].age}
+      click={swithNameHandler.bind(this, 'BIND !')}> MY HOBBIES: RACING1</Person>
+      <Person 
+      name={personsState.persons[1].name} 
+      age={personsState.persons[1].age}
+      changed2={nameChangerHandler}></Person>
+      <Person 
+      name={personsState.persons[2].name} 
+      age={personsState.persons[2].age}> 
+      MY HOBBIES: RACING</Person>
+      </div> 
+    );
+  }
+
+
       return (
         <div className="App">
          <h1>hi!!</h1>
          <p>it works!</p>
          <button style={style} onClick={trogglePersonsHandler}>Show persons</button>
-
-        { getShowPersons.showPersons === true ?
-          <div >
-        <Person 
-        name={personsState.persons[0].name} 
-        age={personsState.persons[0].age}
-        click={swithNameHandler.bind(this, 'BIND !')}> MY HOBBIES: RACING1</Person>
-        <Person 
-        name={personsState.persons[1].name} 
-        age={personsState.persons[1].age}
-        changed2={nameChangerHandler}></Person>
-        <Person 
-        name={personsState.persons[2].name} 
-        age={personsState.persons[2].age}> 
-        MY HOBBIES: RACING</Person>
-        </div> : null
-      }
-
-         
+        {persons}
         </div>
       );
       //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
