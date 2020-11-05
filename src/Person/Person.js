@@ -9,7 +9,7 @@ const person = (props) => {
             <input type="text" onChange={props.changed2} value={props.name}></input>
 
         </div>
-        
+
     )
 }
 
