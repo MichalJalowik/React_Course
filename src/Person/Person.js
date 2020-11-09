@@ -18,11 +18,11 @@ width: 60%;
 `;
 
 const person = (props) => {
-    const style = {
-        '@media (min-width: 500px)':{
-            width: '250px'
-        }
-    }
+    // const style = {
+    //     '@media (min-width: 500px)':{
+    //         width: '250px'
+    //     }
+    // }
 
 
     return (
