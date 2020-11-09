@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import "./App.css";
 import Person from "./Person/Person";
-import Radium, { StyleRoot } from "radium";
+// import Radium, { StyleRoot } from "radium";
 
 class App extends Component {
   state = {
@@ -99,7 +99,7 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
+    
         <div className="App">
           <h1>hi!!!!also from codesandbox!</h1>
           <p className={classes.join(" ")}>it works!</p>
@@ -108,9 +108,9 @@ class App extends Component {
           </button>
           {persons}
         </div>
-      </StyleRoot>
+  
     );
     //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
   }
 }
-export default Radium(App);
+export default App;
