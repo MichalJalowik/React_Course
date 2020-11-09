@@ -6,7 +6,7 @@ import Person from "./Person/Person";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  background-color: green;
+  background-color: ${props => props.alt ? 'red' : 'green'};
   color: white;
   font: inherit;
   border: 1px solid blue;
@@ -14,7 +14,7 @@ const StyledButton = styled.button`
   cursor: pionter;
 
   &:hover {
-    background-color: lightgreen;
+    background-color: ${props => props.alt ? 'lightred' : 'lightgreen'};
     color: black;
   }
 `;
@@ -97,11 +97,11 @@ class App extends Component {
         </div>
       );
 
-      style.backgroundColor = "red";
-      style[":hover"] = {
-        backgroundColor: "lightred",
-        color: "black"
-      };
+      // style.backgroundColor = "red";
+      // style[":hover"] = {
+      //   backgroundColor: "lightred",
+      //   color: "black"
+      // };
     }
 
     const classes = [];
@@ -117,7 +117,7 @@ class App extends Component {
       <div className="App">
         <h1>hi!!!!also from codesandbox!</h1>
         <p className={classes.join(" ")}>it works!</p>
-        <StyledButton onClick={this.trogglePersonsHandler}>
+        <StyledButton alt={this.state.showPersons} onClick={this.trogglePersonsHandler}>
           Show persons
         </StyledButton>
         {persons}
