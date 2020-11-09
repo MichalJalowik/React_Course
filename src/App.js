@@ -3,21 +3,7 @@ import { render } from "react-dom";
 import "./App.css";
 import Person from "./Person/Person";
 // import Radium, { StyleRoot } from "radium";
-import styled from "styled-components";
 
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pionter;
-
-  &:hover {
-    background-color: ${props => props.alt ? 'lightred' : 'lightgreen'};
-    color: black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -117,9 +103,9 @@ class App extends Component {
       <div className="App">
         <h1>hi!!!!also from codesandbox!</h1>
         <p className={classes.join(" ")}>it works!</p>
-        <StyledButton alt={this.state.showPersons} onClick={this.trogglePersonsHandler}>
+        <button className="button" onClick={this.trogglePersonsHandler}>
           Show persons
-        </StyledButton>
+        </button>
         {persons}
       </div>
     );
