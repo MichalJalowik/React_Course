@@ -22,7 +22,11 @@ const person = (props) => {
     //         width: '250px'
     //     }
     // }
+    const rnd = Math.random();
 
+    if(rnd > 0.7){
+throw new Error('dupa')
+    }
 
     return (
        <div className={classes.Person}>
