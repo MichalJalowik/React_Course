@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import classes from "./App.css";
-import Person from "./Person/Person";
+import Person from "../components/Persons/Person/Person";
 // import Radium, { StyleRoot } from "radium";
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons'
+import Cockpit from "../components/Cockpit/Cockpit";
 
 
 class App extends Component {
@@ -50,47 +52,29 @@ class App extends Component {
 
   render() {
     let persons = null;
-    let btnClass = '';
+    
 
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <ErrorBoundary key={person.id}>
-              <Person
-                click={() => this.deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                id={person.id}
-                key={person.id}
-                changed={(e) => {
-                  return this.nameChangerHandler(e, person.id);
-                }}
-              /></ErrorBoundary>
-            );
-          })}
+          <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangerHandler}
+          />
         </div>
       );
-      btnClass = classes.Red;
+      
     }
 
-    const classesAssigned = [];
-
-    if (this.state.persons.length <= 2) {
-      classesAssigned.push(classes.red);
-    }
-    if (this.state.persons.length <= 1) {
-      classesAssigned.push(classes.bold);
-    }
 
     return (
       <div className={classes.App}>
-        <h1>hi!!!!also from codesandbox!</h1>
-        <p className={classesAssigned.join(" ")}>it works!</p>
-        <button className={btnClass} onClick={this.trogglePersonsHandler}>
-          Show persons
-        </button>
+      <Cockpit
+      showPersons={this.state.showPersons}
+      persons={this.state.persons}
+      clicked={this.trogglePersonsHandler}
+      />
         {persons}
       </div>
     );
