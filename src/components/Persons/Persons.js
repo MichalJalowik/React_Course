@@ -14,7 +14,12 @@ class Personss extends Component {
 
     shouldComponentUpdate(nextProps, nextStste){
         console.log('Persons.je shouldCompUpds')
-        return true;
+        if(nextProps.persons !== this.props.persons){
+            return true;
+        } else {
+           return false; 
+        }
+        
     }
 
     getSnapshotBeforeUpdate(prevProps,prevState){
@@ -33,9 +38,9 @@ class Personss extends Component {
 
 
     render() {
+        console.log('persons.je rendering..');
         return (
             this.props.persons.map((person, index) => {
-                console.log('persons.je rendering..');
                 return (
                     <Person
                         click={() => this.props.clicked(index)}

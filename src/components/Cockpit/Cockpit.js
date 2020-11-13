@@ -8,6 +8,7 @@ const cockpit = (props) => {
             alert('seved data')
         }, 1000);
         return() => {
+            // clearTimeout(timer);
             console.log('cockpit.js cleanup work useEffect')
         }
     }, []);
@@ -26,10 +27,10 @@ const cockpit = (props) => {
         btnClass = classes.Red;
     }
 
-    if (props.persons.length <= 2) {
+    if (props.personsLenght <= 2) {
         classesAssigned.push(classes.red);
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLenght <= 1) {
         classesAssigned.push(classes.bold);
     }
 
@@ -44,4 +45,4 @@ const cockpit = (props) => {
     );
 };
 
-export default cockpit;
+export default React.memo(cockpit);
