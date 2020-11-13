@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.css';
 // import Radium from 'radium';
 
@@ -16,27 +16,36 @@ import classes from './Person.css';
 //         }
 // `;
 
-const person = (props) => {
+class Person extends Component {
+
+    render() {
+        console.log('person.js rendering..')
+        return (
+            <div className={classes.Person}>
+                <p onClick={this.props.click}>i'm {this.props.name} ! and i am {this.props.age} years old! with ID: "{this.props.id}"</p>
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.changed} value={this.props.name}></input>
+            </div>
+
+
+        )
+
+    }
+
+
+
     // const style = {
     //     '@media (min-width: 500px)':{
     //         width: '250px'
     //     }
     // }
-//     const rnd = Math.random();
+    //     const rnd = Math.random();
 
-//     if(rnd > 0.7){
-// throw new Error('dupa')
-//     }
+    //     if(rnd > 0.7){
+    // throw new Error('dupa')
+    //     }
 
-    return (
-       <div className={classes.Person}>
-            <p onClick={props.click}>i'm {props.name} ! and i am {props.age} years old! with ID: "{props.id}"</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name}></input>
-       </div>
-           
 
-    )
 }
 
-export default person;
+export default Person;
