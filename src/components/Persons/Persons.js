@@ -26,6 +26,10 @@ class Personss extends Component {
         console.log('persons.js compon did upda');
         console.log(snapshot)
     }
+    
+    componentWillUnmount(){
+        console.log('persons.js comp will unmout')
+    }
 
 
     render() {

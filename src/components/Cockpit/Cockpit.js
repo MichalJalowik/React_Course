@@ -1,7 +1,23 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import classes from './Cockpit.css';
 
 const cockpit = (props) => {
+    useEffect(() => {
+        console.log('cockpit.js useEffect');
+        setTimeout(() => {
+            alert('seved data')
+        }, 1000);
+        return() => {
+            console.log('cockpit.js cleanup work useEffect')
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log('cockpit.js 2nd ise effect' );
+        return() => {
+            console.log('cockpit.js cleanup work useEffect')
+        }
+    });
 
     const classesAssigned = [];
     let btnClass = '';
