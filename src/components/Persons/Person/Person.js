@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Auxx from '../../../Auxiliary/Auxiliary';
 import withClass from '../../../Auxiliary/withClass'
@@ -39,6 +40,15 @@ class Person extends Component {
         );
       }
 }
+
+Person.propTypes = {
+
+click: PropTypes.func,
+name: PropTypes.string,
+age: PropTypes.number,
+changed: PropTypes.func
+
+};
 
 
 
