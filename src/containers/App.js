@@ -4,6 +4,8 @@ import classes from "./App.css";
 // import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import Persons from '../components/Persons/Persons'
 import Cockpit from "../components/Cockpit/Cockpit";
+import withClass from '../Auxiliary/withClass'
+import Aux from '../Auxiliary/Auxiliary'
 
 
 class App extends Component {
@@ -99,7 +101,7 @@ class App extends Component {
 
 
     return (
-      <div className={classes.App}>
+      <Aux>
       <button onClick={() => {this.setState({showCockpit: false})}}>remove cockpit</button>
         { this.state.showCockpit ? <Cockpit
           title={this.props.appTitle}
@@ -108,9 +110,9 @@ class App extends Component {
           clicked={this.trogglePersonsHandler}
         /> : null}
         {persons}
-      </div>
+      </Aux>
     );
     //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
   }
 }
-export default App;
+export default withClass(App, classes.App);

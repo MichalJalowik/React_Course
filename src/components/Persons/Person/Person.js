@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Auxx from '../../../Auxiliary/Auxiliary';
+import withClass from '../../../Auxiliary/withClass'
 import classes from './Person.css';
 
 // import Radium from 'radium';
@@ -54,7 +55,7 @@ class Person extends Component {
 
 
 
-export default Person;
+export default withClass(Person, classes.Person);
 
 
 
