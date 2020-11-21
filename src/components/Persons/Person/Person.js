@@ -20,15 +20,12 @@ class Person extends Component {
 
     render() {
         console.log('person.js rendering..')
-        return (
-            <div className={classes.Person}>
-                <p onClick={this.props.click}>i'm {this.props.name} ! and i am {this.props.age} years old! with ID: "{this.props.id}"</p>
-                <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.changed} value={this.props.name}></input>
-            </div>
-
-
-        )
+        return [
+            
+                <p key="i1" onClick={this.props.click}>i'm {this.props.name} ! and i am {this.props.age} years old! with ID: "{this.props.id}"</p>,
+                <p key="i2">{this.props.children}</p>,
+                <input key = "i3" type="text" onChange={this.props.changed} value={this.props.name}></input>,
+    ];
 
     }
 
