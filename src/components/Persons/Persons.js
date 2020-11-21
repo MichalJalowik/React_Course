@@ -52,8 +52,11 @@ class Personss extends PureComponent {
                         age={person.age}
                         id={person.id}
                         key={person.id}
-                        changed={(e) => this.props.changed(e, person.id)}
-                        isAuth={this.props.isAutenticated}
+                        changed={(e) => {
+                            return this.props.changed(e, person.id);
+                        }
+                    
+                    }
                     />
                 );
             })

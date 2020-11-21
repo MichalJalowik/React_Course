@@ -1,10 +1,11 @@
-import React,{ useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
 
     const toggleBtnRef = useRef(null);
-    
+
 
     useEffect(() => {
         console.log('cockpit.js useEffect');
@@ -12,15 +13,15 @@ const cockpit = (props) => {
         //     alert('seved data')
         // }, 1000);
         toggleBtnRef.current.click();
-        return() => {
+        return () => {
             // clearTimeout(timer);
             console.log('cockpit.js cleanup work useEffect')
         }
     }, []);
 
     useEffect(() => {
-        console.log('cockpit.js 2nd ise effect' );
-        return() => {
+        console.log('cockpit.js 2nd ise effect');
+        return () => {
             console.log('cockpit.js cleanup work useEffect')
         }
     });
@@ -46,7 +47,9 @@ const cockpit = (props) => {
             <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
                 Show persons
         </button>
-        <button onClick={props.login}>Log in</button>
+            <AuthContext.Consumer>
+                {(context) => <button onClick={context.login}>Log in</button>}
+            </AuthContext.Consumer>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Auxx from '../../../Auxiliary/Auxiliary';
 import withClass from '../../../Auxiliary/withClass'
 import classes from './Person.css';
+import AuthContext from '../../../context/auth-context';
 
 // import Radium from 'radium';
 
@@ -22,7 +23,7 @@ import classes from './Person.css';
 // `;
 
 class Person extends Component {
-    constructor(props){
+    constructor(props) {
         super();
         this.inputElementRef = React.createRef();
     }
@@ -30,7 +31,7 @@ class Person extends Component {
 
 
 
-    componentDidMount(){
+    componentDidMount() {
         //this.inputElement.focus();
         this.inputElementRef.current.focus();
     }
@@ -40,46 +41,48 @@ class Person extends Component {
     render() {
         console.log('[Person.js] rendering...');
         return (
-          <Auxx>
-          {this.props.isAuth ? <p>Authenticated</p> : <p>please log in</p>}
-            <p onClick={this.props.click}>
-              I'm {this.props.name} and I am {this.props.age} years old!
+            <Auxx>
+                <AuthContext.Consumer>
+                    {(context) => context.authenticated ? <p>Authenticated</p> : <p>please log in</p>}
+                </AuthContext.Consumer>
+                <p onClick={this.props.click}>
+                    I'm {this.props.name} and I am {this.props.age} years old!
             </p>
-            <p key="i2">{this.props.children}</p>
-            <input
-              key="i3"
-            //   ref={(inputEl) => {this.inputElement = inputEl}}
-            ref={this.inputElementRef}
-              type="text"
-              onChange={this.props.changed}
-              value={this.props.name}
-            />
-          </Auxx>
+                <p key="i2">{this.props.children}</p>
+                <input
+                    key="i3"
+                    //   ref={(inputEl) => {this.inputElement = inputEl}}
+                    ref={this.inputElementRef}
+                    type="text"
+                    onChange={this.props.changed}
+                    value={this.props.name}
+                />
+            </Auxx>
         );
-      }
+    }
 }
 
 Person.propTypes = {
 
-click: PropTypes.func,
-name: PropTypes.string,
-age: PropTypes.number,
-changed: PropTypes.func
+    click: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    changed: PropTypes.func
 
 };
 
 
 
-    // const style = {
-    //     '@media (min-width: 500px)':{
-    //         width: '250px'
-    //     }
-    // }
-    //     const rnd = Math.random();
+// const style = {
+//     '@media (min-width: 500px)':{
+//         width: '250px'
+//     }
+// }
+//     const rnd = Math.random();
 
-    //     if(rnd > 0.7){
-    // throw new Error('dupa')
-    //     }
+//     if(rnd > 0.7){
+// throw new Error('dupa')
+//     }
 
 
 
