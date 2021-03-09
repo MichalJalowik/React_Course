@@ -66,31 +66,28 @@ const app = (props) => {
 
   const clicked = (area) => {
     setMsg(
-      `You clicked on ${area.shape} at coords ${JSON.stringify(area.coords)} !`
+      `You clicked on ${area.shape} ${area.name} at coords ${JSON.stringify(area.coords)} !`
     );
   };
 
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    this.setState({
-      msg: `You clicked on the image at coords ${JSON.stringify(coords)} !`
-    });
+    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
   };
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    this.setState({
-      moveMsg: `You moved on the image at coords ${JSON.stringify(coords)} !`
-    });
+      setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`)
   };
 
   const enterArea = (area) => {
-    this.setState({
-      hoveredArea: area,
-      msg: `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
+    //hoveredArea: area, ???
+    setHoveredArea(null);
+    setMsg(
+      `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
         area.coords
       )} !`
-    });
+    );
   };
 
   const leaveArea = (area) => {
@@ -131,10 +128,10 @@ const app = (props) => {
         onLoad={() => load()}
         onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
         onClick={(area) => clicked(area)}
-        // onMouseEnter={(area) => enterArea(area)}
+        onMouseEnter={(area) => enterArea(area)}
         onMouseLeave={(area) => leaveArea(area)}
-        // onImageClick={(evt) => clickedOutside(evt)}
-        // onImageMouseMove={(evt) => moveOnImage(evt)}
+        onImageClick={(evt) => clickedOutside(evt)}
+        onImageMouseMove={(evt) => moveOnImage(evt)}
         lineWidth={4}
         strokeColor={"white"}
       />
