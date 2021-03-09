@@ -8,6 +8,17 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
+  let MAP2 = {
+    name: "my-map",
+    areas: [
+      { name: "1", shape: "poly", coords: [25,33,27,300,128,240,128,94], preFillColor: "green", fillColor: "blue"  },
+      { name: "2", shape: "poly", coords: [219,118,220,210,283,210,284,119], preFillColor: "pink"  },
+      { name: "3", shape: "poly", coords: [381,241,383,94,462,53,457,282], fillColor: "yellow"  },
+      { name: "4", shape: "poly", coords: [245,285,290,285,274,239,249,238], preFillColor: "red"  },
+      { name: "5", shape: "circle", coords: [170, 100, 25 ] },
+    ]
+  };
+
   let MAP = {
     name: "my-map",
     areas: [
@@ -125,7 +136,7 @@ const app = (props) => {
         <div style={{ position: "relative" }}>
           <ImageMapper
             src={URL}
-            map={MAP}
+            map={MAP2}
             width={500}
             onLoad={() => load()}
             onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
