@@ -66,7 +66,9 @@ const app = (props) => {
 
   const clicked = (area) => {
     setMsg(
-      `You clicked on ${area.shape} ${area.name} at coords ${JSON.stringify(area.coords)} !`
+      `You clicked on ${area.shape} ${area.name} at coords ${JSON.stringify(
+        area.coords
+      )} !`
     );
   };
 
@@ -77,12 +79,12 @@ const app = (props) => {
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-      setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`)
+    setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
   };
 
   const enterArea = (area) => {
     //hoveredArea: area, ???
-    setHoveredArea(null);
+    setHoveredArea(area);
     setMsg(
       `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
         area.coords
@@ -118,26 +120,36 @@ const app = (props) => {
   };
 
   return (
-    <div className="App">
-      <h1>hi!!</h1>
-      <p>it works!</p>
-      <ImageMapper
-        src={URL}
-        map={MAP}
-        width={500}
-        onLoad={() => load()}
-        onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
-        onClick={(area) => clicked(area)}
-        onMouseEnter={(area) => enterArea(area)}
-        onMouseLeave={(area) => leaveArea(area)}
-        onImageClick={(evt) => clickedOutside(evt)}
-        onImageMouseMove={(evt) => moveOnImage(evt)}
-        lineWidth={4}
-        strokeColor={"white"}
-      />
-      <div>{msg}</div>
-      <div>{hoveredArea}</div>
-      <div>{moveMsg}</div>
+    <div className="grid">
+      <div className="presenter"> 
+        <div style={{ position: "relative" }}>
+          <ImageMapper
+            src={URL}
+            map={MAP}
+            width={500}
+            onLoad={() => load()}
+            onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
+            onClick={(area) => clicked(area)}
+            onMouseEnter={(area) => enterArea(area)}
+            onMouseLeave={(area) => leaveArea(area)}
+            onImageClick={(evt) => clickedOutside(evt)}
+            onImageMouseMove={(evt) => moveOnImage(evt)}
+            lineWidth={4}
+            strokeColor={"white"}
+          />
+
+          {hoveredArea && (
+            <span 
+            className="tooltip"
+            style={{ ...getTipPosition(hoveredArea) }}>
+              {hoveredArea && hoveredArea.name}
+            </span>
+          )}
+        </div>
+
+        <pre className="message">{msg ? msg : null}</pre>
+        <pre>{moveMsg ? moveMsg : null}</pre>
+      </div>
     </div>
   );
   //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
