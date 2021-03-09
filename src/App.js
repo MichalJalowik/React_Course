@@ -4,6 +4,8 @@ import ImageMapper from "react-image-mapper";
 
 //ES6 way
 const app = (props) => {
+  const [msg, setMsg] = useState(null);
+  const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
   let MAP = {
@@ -58,12 +60,14 @@ const app = (props) => {
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
+  const load = () => {
+    setMsg("Interact with image !");
+  };
+
   const clicked = (area) => {
-    this.setState({
-      msg: `You clicked on ${area.shape} at coords ${JSON.stringify(
-        area.coords
-      )} !`
-    });
+    setMsg(
+      `You clicked on ${area.shape} at coords ${JSON.stringify(area.coords)} !`
+    );
   };
 
   const clickedOutside = (evt) => {
@@ -90,12 +94,12 @@ const app = (props) => {
   };
 
   const leaveArea = (area) => {
-    this.setState({
-      hoveredArea: null,
-      msg: `You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
+    setHoveredArea(null);
+    setMsg(
+      `You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
         area.coords
       )} !`
-    });
+    );
   };
 
   const moveOnArea = (area, evt) => {
@@ -124,9 +128,18 @@ const app = (props) => {
         src={URL}
         map={MAP}
         width={500}
+        onLoad={() => load()}
         onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
+        onClick={(area) => clicked(area)}
+        // onMouseEnter={(area) => enterArea(area)}
+        onMouseLeave={(area) => leaveArea(area)}
+        // onImageClick={(evt) => clickedOutside(evt)}
+        // onImageMouseMove={(evt) => moveOnImage(evt)}
+        lineWidth={4}
+        strokeColor={"white"}
       />
-
+      <div>{msg}</div>
+      <div>{hoveredArea}</div>
       <div>{moveMsg}</div>
     </div>
   );
