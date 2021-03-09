@@ -115,14 +115,14 @@ const app = (props) => {
   const moveOnArea = (area, evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(
-      "You moved on " +
+      'You moved on ' +
         area.shape +
-        " " +
+        ' ' +
         area.name +
-        " at cords: " +
+        ' at coords {"x":'+
         coords.x +
-        " " +
-        coords.y
+        ',"y":' +
+        coords.y + '} !'
     );
   };
 
