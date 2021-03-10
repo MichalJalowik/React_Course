@@ -8,13 +8,13 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
-  let MAP2 = {
+  const [MAP2, setMAP2] = useState({
     name: "my-map",
     areas: [
       {
         name: "1",
         shape: "poly",
-        coords: [25, 33, 27, 300, 128, 240, 128, 94],
+        coords: [25, 33, 27, 300, 128, 240],
         preFillColor: "green",
         fillColor: "blue"
       },
@@ -38,7 +38,7 @@ const app = (props) => {
       },
       { name: "5", shape: "circle", coords: [170, 100, 25] }
     ]
-  };
+  });
 
   const [Dots, setDots] = useState([]);
 
@@ -46,7 +46,6 @@ const app = (props) => {
     name: "dots-map",
     areas: Dots
   };
-
 
   let MAP = {
     name: "my-map",
@@ -112,13 +111,60 @@ const app = (props) => {
     );
   };
 
+  const clickHandler = () => {
+    setMAP2({
+      name: "my-map",
+      areas: [
+        {
+          name: "1",
+          shape: "poly",
+          coords: [25, 33, 27, 300, 128, 240, 300, 350],
+          preFillColor: "green",
+          fillColor: "blue"
+        },
+        {
+          name: "2",
+          shape: "poly",
+          coords: [219, 118, 220, 210, 283, 210, 284, 119],
+          preFillColor: "pink"
+        },
+        {
+          name: "3",
+          shape: "poly",
+          coords: [381, 241, 383, 94, 462, 53, 457, 282],
+          fillColor: "yellow"
+        },
+        {
+          name: "4",
+          shape: "poly",
+          coords: [245, 285, 290, 285, 274, 239, 249, 238],
+          preFillColor: "red"
+        },
+        { name: "5", shape: "circle", coords: [170, 100, 25] }
+      ]
+    });
+    // MAP2.areas.push({name: "10",
+    // shape: "poly",
+    // coords: arr,
+    // preFillColor: "red"});
+  };
+
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
-    setDots(oldArray => [...oldArray, {name: "1", shape: "circle", coords: [coords.x, coords.y, 3], preFillColor: "black", lineWidth: 11}]);
-  };
+    setDots((oldArray) => [
+      ...oldArray,
+      {
+        name: "1",
+        shape: "circle",
+        coords: [coords.x, coords.y, 3],
+        preFillColor: "black",
+        lineWidth: 11
+      }
+    ]);
 
-  
+    clickHandler();
+  };
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
