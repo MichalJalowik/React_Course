@@ -209,6 +209,20 @@ const app = (props) => {
     return { top: `${area.center[1]}px`, left: `${area.center[0]}px` };
   };
 
+  const makeDot = (evt) => {
+    const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
+    setDots((oldArray) => [
+      ...oldArray,
+      {
+        name: "1",
+        shape: "circle",
+        coords: [coords.x, coords.y, 3],
+        preFillColor: "black",
+        lineWidth: 11
+      }
+    ]);
+  };
+
   return (
     <div className="grid">
       <div className="presenter">
@@ -228,7 +242,13 @@ const app = (props) => {
             strokeColor={"white"}
           />
 
-          <ImageMapper src={URL} map={DotsX} width={500} />
+          <ImageMapper
+            src={URL}
+            map={DotsX}
+            width={500}
+            onImageClick={(evt) => makeDot(evt)}
+            onImageMouseMove={(evt) => moveOnImage(evt)}
+          />
 
           {hoveredArea && (
             <span
