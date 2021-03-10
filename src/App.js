@@ -11,13 +11,42 @@ const app = (props) => {
   let MAP2 = {
     name: "my-map",
     areas: [
-      { name: "1", shape: "poly", coords: [25,33,27,300,128,240,128,94], preFillColor: "green", fillColor: "blue"  },
-      { name: "2", shape: "poly", coords: [219,118,220,210,283,210,284,119], preFillColor: "pink"  },
-      { name: "3", shape: "poly", coords: [381,241,383,94,462,53,457,282], fillColor: "yellow"  },
-      { name: "4", shape: "poly", coords: [245,285,290,285,274,239,249,238], preFillColor: "red"  },
-      { name: "5", shape: "circle", coords: [170, 100, 25 ] },
+      {
+        name: "1",
+        shape: "poly",
+        coords: [25, 33, 27, 300, 128, 240, 128, 94],
+        preFillColor: "green",
+        fillColor: "blue"
+      },
+      {
+        name: "2",
+        shape: "poly",
+        coords: [219, 118, 220, 210, 283, 210, 284, 119],
+        preFillColor: "pink"
+      },
+      {
+        name: "3",
+        shape: "poly",
+        coords: [381, 241, 383, 94, 462, 53, 457, 282],
+        fillColor: "yellow"
+      },
+      {
+        name: "4",
+        shape: "poly",
+        coords: [245, 285, 290, 285, 274, 239, 249, 238],
+        preFillColor: "red"
+      },
+      { name: "5", shape: "circle", coords: [170, 100, 25] }
     ]
   };
+
+  const [Dots, setDots] = useState([]);
+
+  let DotsX = {
+    name: "dots-map",
+    areas: Dots
+  };
+
 
   let MAP = {
     name: "my-map",
@@ -86,7 +115,10 @@ const app = (props) => {
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
+    setDots(oldArray => [...oldArray, {name: "1", shape: "circle", coords: [coords.x, coords.y, 3], preFillColor: "black", lineWidth: 11}]);
   };
+
+  
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
@@ -115,14 +147,15 @@ const app = (props) => {
   const moveOnArea = (area, evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(
-      'You moved on ' +
+      "You moved on " +
         area.shape +
-        ' ' +
+        " " +
         area.name +
-        ' at coords {"x":'+
+        ' at coords {"x":' +
         coords.x +
         ',"y":' +
-        coords.y + '} !'
+        coords.y +
+        "} !"
     );
   };
 
@@ -132,7 +165,7 @@ const app = (props) => {
 
   return (
     <div className="grid">
-      <div className="presenter"> 
+      <div className="presenter">
         <div style={{ position: "relative" }}>
           <ImageMapper
             src={URL}
@@ -149,10 +182,13 @@ const app = (props) => {
             strokeColor={"white"}
           />
 
+          <ImageMapper src={URL} map={DotsX} width={500} />
+
           {hoveredArea && (
-            <span 
-            className="tooltip"
-            style={{ ...getTipPosition(hoveredArea) }}>
+            <span
+              className="tooltip"
+              style={{ ...getTipPosition(hoveredArea) }}
+            >
               {hoveredArea && hoveredArea.name}
             </span>
           )}
