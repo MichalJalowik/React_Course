@@ -8,6 +8,9 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
+
+ 
+
   const [MAP2, setMAP2] = useState({
     name: "my-map",
     areas: [
@@ -39,6 +42,17 @@ const app = (props) => {
       { name: "5", shape: "circle", coords: [170, 100, 25] }
     ]
   });
+
+const [MAPT, setMAPT] = useState({
+  name: "test_map",
+  areas:[{
+    name: "T1",
+    shape: "poly",
+    coords: [25, 33, 27, 300, 128, 240],
+    preFillColor: "green",
+    fillColor: "blue"
+  }]
+});
 
   const [Dots, setDots] = useState([]);
 
@@ -111,14 +125,14 @@ const app = (props) => {
     );
   };
 
-  const clickHandler = () => {
+  const clickHandler = (x,y) => {
     setMAP2({
       name: "my-map",
       areas: [
         {
           name: "1",
           shape: "poly",
-          coords: [25, 33, 27, 300, 128, 240, 300, 350],
+          coords: [25, 33, 27, 300, 128, 240, x,y],
           preFillColor: "green",
           fillColor: "blue"
         },
@@ -163,7 +177,7 @@ const app = (props) => {
       }
     ]);
 
-    clickHandler();
+    clickHandler(coords.x, coords.y);
   };
 
   const moveOnImage = (evt) => {
@@ -221,6 +235,27 @@ const app = (props) => {
         lineWidth: 11
       }
     ]);
+    handleChangeObjectAddArray(666);
+    
+   
+
+
+  };
+
+  const [Dots2, setDots2] = useState([40]);
+
+  let DotsT = {
+    name: "dots-map2",
+    areas: [],
+  };
+  
+
+  const handleChangeObjectAddArray = (coord, index) => {
+    DotsT.areas.push(4)
+    setDots2(DotsT)
+    //console.log(MAPT.areas[0].coords[0])
+    {console.log(Dots2)}
+  
   };
 
   return (
@@ -248,7 +283,16 @@ const app = (props) => {
             width={500}
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
+            
           />
+
+          <ImageMapper
+            src={URL}
+            map={MAPT}
+            width={500}
+            
+          />
+          
 
           {hoveredArea && (
             <span
