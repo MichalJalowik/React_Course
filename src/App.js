@@ -8,15 +8,57 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
-  let MAP2 = {
+
+ 
+
+  const [MAP2, setMAP2] = useState({
     name: "my-map",
     areas: [
-      { name: "1", shape: "poly", coords: [25,33,27,300,128,240,128,94], preFillColor: "green", fillColor: "blue"  },
-      { name: "2", shape: "poly", coords: [219,118,220,210,283,210,284,119], preFillColor: "pink"  },
-      { name: "3", shape: "poly", coords: [381,241,383,94,462,53,457,282], fillColor: "yellow"  },
-      { name: "4", shape: "poly", coords: [245,285,290,285,274,239,249,238], preFillColor: "red"  },
-      { name: "5", shape: "circle", coords: [170, 100, 25 ] },
+      {
+        name: "1",
+        shape: "poly",
+        coords: [25, 33, 27, 300, 128, 240],
+        preFillColor: "green",
+        fillColor: "blue"
+      },
+      {
+        name: "2",
+        shape: "poly",
+        coords: [219, 118, 220, 210, 283, 210, 284, 119],
+        preFillColor: "pink"
+      },
+      {
+        name: "3",
+        shape: "poly",
+        coords: [381, 241, 383, 94, 462, 53, 457, 282],
+        fillColor: "yellow"
+      },
+      {
+        name: "4",
+        shape: "poly",
+        coords: [245, 285, 290, 285, 274, 239, 249, 238],
+        preFillColor: "red"
+      },
+      { name: "5", shape: "circle", coords: [170, 100, 25] }
     ]
+  });
+
+const [MAPT, setMAPT] = useState({
+  name: "test_map",
+  areas:[{
+    name: "T1",
+    shape: "poly",
+    coords: [25, 33, 27, 300, 128, 240],
+    preFillColor: "green",
+    fillColor: "blue"
+  }]
+});
+
+  const [Dots, setDots] = useState([]);
+
+  let DotsX = {
+    name: "dots-map",
+    areas: Dots
   };
 
   let MAP = {
@@ -83,9 +125,59 @@ const app = (props) => {
     );
   };
 
+  const clickHandler = (x,y) => {
+    setMAP2({
+      name: "my-map",
+      areas: [
+        {
+          name: "1",
+          shape: "poly",
+          coords: [25, 33, 27, 300, 128, 240, x,y],
+          preFillColor: "green",
+          fillColor: "blue"
+        },
+        {
+          name: "2",
+          shape: "poly",
+          coords: [219, 118, 220, 210, 283, 210, 284, 119],
+          preFillColor: "pink"
+        },
+        {
+          name: "3",
+          shape: "poly",
+          coords: [381, 241, 383, 94, 462, 53, 457, 282],
+          fillColor: "yellow"
+        },
+        {
+          name: "4",
+          shape: "poly",
+          coords: [245, 285, 290, 285, 274, 239, 249, 238],
+          preFillColor: "red"
+        },
+        { name: "5", shape: "circle", coords: [170, 100, 25] }
+      ]
+    });
+    // MAP2.areas.push({name: "10",
+    // shape: "poly",
+    // coords: arr,
+    // preFillColor: "red"});
+  };
+
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
+    setDots((oldArray) => [
+      ...oldArray,
+      {
+        name: "1",
+        shape: "circle",
+        coords: [coords.x, coords.y, 3],
+        preFillColor: "black",
+        lineWidth: 11
+      }
+    ]);
+
+    clickHandler(coords.x, coords.y);
   };
 
   const moveOnImage = (evt) => {
@@ -115,14 +207,15 @@ const app = (props) => {
   const moveOnArea = (area, evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(
-      'You moved on ' +
+      "You moved on " +
         area.shape +
-        ' ' +
+        " " +
         area.name +
-        ' at coords {"x":'+
+        ' at coords {"x":' +
         coords.x +
         ',"y":' +
-        coords.y + '} !'
+        coords.y +
+        "} !"
     );
   };
 
@@ -130,9 +223,44 @@ const app = (props) => {
     return { top: `${area.center[1]}px`, left: `${area.center[0]}px` };
   };
 
+  const makeDot = (evt) => {
+    const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
+    setDots((oldArray) => [
+      ...oldArray,
+      {
+        name: "1",
+        shape: "circle",
+        coords: [coords.x, coords.y, 3],
+        preFillColor: "black",
+        lineWidth: 11
+      }
+    ]);
+    handleChangeObjectAddArray(666);
+    
+   
+
+
+  };
+
+  const [Dots2, setDots2] = useState([40]);
+
+  let DotsT = {
+    name: "dots-map2",
+    areas: [],
+  };
+  
+
+  const handleChangeObjectAddArray = (coord, index) => {
+    DotsT.areas.push(4)
+    setDots2(DotsT)
+    //console.log(MAPT.areas[0].coords[0])
+    {console.log(Dots2)}
+  
+  };
+
   return (
     <div className="grid">
-      <div className="presenter"> 
+      <div className="presenter">
         <div style={{ position: "relative" }}>
           <ImageMapper
             src={URL}
@@ -149,10 +277,28 @@ const app = (props) => {
             strokeColor={"white"}
           />
 
+          <ImageMapper
+            src={URL}
+            map={DotsX}
+            width={500}
+            onImageClick={(evt) => makeDot(evt)}
+            onImageMouseMove={(evt) => moveOnImage(evt)}
+            
+          />
+
+          <ImageMapper
+            src={URL}
+            map={MAPT}
+            width={500}
+            
+          />
+          
+
           {hoveredArea && (
-            <span 
-            className="tooltip"
-            style={{ ...getTipPosition(hoveredArea) }}>
+            <span
+              className="tooltip"
+              style={{ ...getTipPosition(hoveredArea) }}
+            >
               {hoveredArea && hoveredArea.name}
             </span>
           )}
