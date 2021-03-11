@@ -103,6 +103,7 @@ const app = (props) => {
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
+    console.log(userLayout);
   };
 
   const enterArea = (area) => {
@@ -159,7 +160,19 @@ const app = (props) => {
     setCoordsU((oldArray) => [...oldArray, coords.x]);
     setCoordsU((oldArray) => [...oldArray, coords.y]);
 
-    //console.log(coordsU);
+    let newData = userLayout.areas[0].coords[0];
+    console.log("newData " + newData);
+
+    //Podmienia
+    //setUserLayout({...userLayout, name:  "xx"  });
+
+    //Dodaje newData do obiektu
+    //setUserLayout({...userLayout, newData:  "6"  });
+
+    //Zamienia areas
+    //setUserLayout({...userLayout, areas:  "xx"  });
+
+    //
   };
 
   const print = () => {
