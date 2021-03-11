@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import "./App.css";
 import ImageMapper from "react-image-mapper";
 
-//ES6 way
 const app = (props) => {
   const [msg, setMsg] = useState(null);
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
-
-
- 
 
   const [MAP2, setMAP2] = useState({
     name: "my-map",
@@ -43,16 +39,18 @@ const app = (props) => {
     ]
   });
 
-const [MAPT, setMAPT] = useState({
-  name: "test_map",
-  areas:[{
-    name: "T1",
-    shape: "poly",
-    coords: [25, 33, 27, 300, 128, 240],
-    preFillColor: "green",
-    fillColor: "blue"
-  }]
-});
+  const [MAPT, setMAPT] = useState({
+    name: "test_map",
+    areas: [
+      {
+        name: "T1",
+        shape: "poly",
+        coords: [25, 33, 27, 300, 128, 240],
+        preFillColor: "green",
+        fillColor: "blue"
+      }
+    ]
+  });
 
   const [Dots, setDots] = useState([]);
 
@@ -125,14 +123,14 @@ const [MAPT, setMAPT] = useState({
     );
   };
 
-  const clickHandler = (x,y) => {
+  const clickHandler = (x, y) => {
     setMAP2({
       name: "my-map",
       areas: [
         {
           name: "1",
           shape: "poly",
-          coords: [25, 33, 27, 300, 128, 240, x,y],
+          coords: [25, 33, 27, 300, 128, 240, x, y],
           preFillColor: "green",
           fillColor: "blue"
         },
@@ -236,26 +234,22 @@ const [MAPT, setMAPT] = useState({
       }
     ]);
     handleChangeObjectAddArray(666);
-    
-   
-
-
   };
 
   const [Dots2, setDots2] = useState([40]);
 
   let DotsT = {
     name: "dots-map2",
-    areas: [],
+    areas: []
   };
-  
 
   const handleChangeObjectAddArray = (coord, index) => {
-    DotsT.areas.push(4)
-    setDots2(DotsT)
+    DotsT.areas.push(4);
+    setDots2(DotsT);
     //console.log(MAPT.areas[0].coords[0])
-    {console.log(Dots2)}
-  
+    {
+      console.log(Dots2);
+    }
   };
 
   return (
@@ -283,16 +277,9 @@ const [MAPT, setMAPT] = useState({
             width={500}
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
-            
           />
 
-          <ImageMapper
-            src={URL}
-            map={MAPT}
-            width={500}
-            
-          />
-          
+          <ImageMapper src={URL} map={MAPT} width={500} />
 
           {hoveredArea && (
             <span
