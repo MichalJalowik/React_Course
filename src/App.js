@@ -15,6 +15,19 @@ const app = (props) => {
   //Chce ilsc z tematem do przodu;)
   const [coordsU, setCoordsU] = useState([]);
 
+  let UserLayout2 = {
+    name: "user-test",
+    areas: [
+      {
+        name: "T1",
+        shape: "poly",
+        coords: coordsU,
+        preFillColor: "green",
+        fillColor: "blue"
+      }
+    ]
+  };
+
   const [userLayout, setUserLayout] = useState({
     name: "test_map",
     areas: [
@@ -197,7 +210,7 @@ const app = (props) => {
           <h2>userLayout</h2>
           <ImageMapper
             src={URL}
-            map={userLayout}
+            map={UserLayout2}
             width={500}
             onImageClick={(evt) => clickedOutside(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
