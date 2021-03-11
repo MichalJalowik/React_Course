@@ -7,6 +7,14 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
+  //klikajac na zdjecie AdminLayout uzupełnia sie array cordsU.
+  //Trzeba zrobic tak zeby userLayout.areas.coords = coordsU.
+  //Wtedy po zaznaczeniu koordynatów na Admin bedzie kolazywało się pole userLayout.
+  //Na komponentach nie bedzie problemu.
+  //Zrób na hooksach albo daj prosze znać szybko ze się nie da, bo już 2 dni zmarnowałem.
+  //Chce ilsc z tematem do przodu;)
+  const [coordsU, setCoordsU] = useState([]);
+
   const [userLayout, setUserLayout] = useState({
     name: "test_map",
     areas: [
@@ -122,9 +130,6 @@ const app = (props) => {
     return { top: `${area.center[1]}px`, left: `${area.center[0]}px` };
   };
 
-  let coordsT = [];
-  const [coordsU, setCoordsU] = useState([]);
-
   const makeDot = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setDots((oldArray) => [
@@ -137,13 +142,14 @@ const app = (props) => {
         lineWidth: 11
       }
     ]);
-    coordsT.push(coords.x);
-    coordsT.push(coords.y);
 
     setCoordsU((oldArray) => [...oldArray, coords.x]);
     setCoordsU((oldArray) => [...oldArray, coords.y]);
 
-    console.log(coordsT);
+    //console.log(coordsU);
+  };
+
+  const print = () => {
     console.log(coordsU);
   };
 
@@ -179,7 +185,8 @@ const app = (props) => {
             </span>
           )} */}
 
-          <h2>Edit Interface</h2>
+          <h2>AdminLayout</h2>
+
           <ImageMapper
             src={URL}
             map={AdminLayout}
@@ -187,8 +194,7 @@ const app = (props) => {
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
-
-          <h2>User Interface</h2>
+          <h2>userLayout</h2>
           <ImageMapper
             src={URL}
             map={userLayout}
