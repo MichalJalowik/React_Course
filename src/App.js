@@ -172,7 +172,11 @@ const app = (props) => {
     //Zamienia areas
     //setUserLayout({...userLayout, areas:  "xx"  });
 
-    //
+    //jak podmienic wartość w areas[0].coords[0] ???????????????
+    //setUserLayout({...userLayout, areas[0].coords[0]: 666 });
+
+    //jak dodać nowy objekt do areas ???????????????
+    //setUserLayout({...userLayout, areas: userLayout.areas.push({"dupa"})});
   };
 
   const print = () => {
