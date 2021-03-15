@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import ImageMapper from "react-image-mapper";
 
@@ -178,6 +178,14 @@ const app = (props) => {
     //jak dodać nowy objekt do areas ???????????????
     //setUserLayout({...userLayout, areas: userLayout.areas.push({"dupa"})});
   };
+
+  useEffect(() => {
+    const areasCopy = [...userLayout.areas];
+    areasCopy[0].coords.push(50);
+    const userLayoutCopy = { ...userLayout, areas: areasCopy };
+
+    setUserLayout(userLayoutCopy);
+  }, [coordsU]);
 
   const print = () => {
     console.log(coordsU);
