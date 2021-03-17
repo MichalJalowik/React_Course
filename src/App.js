@@ -183,13 +183,12 @@ const app = (props) => {
             </span>
           )} */}
 
-          <h2>AdminLayout</h2>
+          <h2>Admin layout</h2>
           <ImageMapper
             src={URL}
             map={adminLayout}
             width={500}
             onImageClick={(evt) => makeDot(evt)}
-            onImageMouseMove={(evt) => moveOnImage(evt)}
           />
           <button onClick={() => resetHandler()}>Reset</button>
           <button
@@ -201,17 +200,24 @@ const app = (props) => {
             Add polygon
           </button>
 
-          <h2>userLayout</h2>
+          <h2>User layout</h2>
           <ImageMapper
             src={URL}
             map={userLayout}
             width={500}
             onImageClick={(evt) => clickedOutside(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
+            onLoad={() => load()}
+            onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
+            onClick={(area) => clicked(area)}
+            onMouseEnter={(area) => enterArea(area)}
+            onMouseLeave={(area) => leaveArea(area)}
+            lineWidth={4}
+            strokeColor={"white"}
           />
         </div>
-        {/* <pre className="message">{msg ? msg : null}</pre> */}
-        {/* <pre>{moveMsg ? moveMsg : null}</pre> */}
+        <pre className="message">{msg ? msg : null}</pre>
+        <pre>{moveMsg ? moveMsg : null}</pre>
       </div>
     </div>
   );
