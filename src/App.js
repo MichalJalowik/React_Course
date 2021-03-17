@@ -198,7 +198,14 @@ const app = (props) => {
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
           <button onClick={() => resetHandler()}>Reset</button>
-          <button onClick={() => addPolygonHandler()}>Add polygon</button>
+          <button
+            onClick={() => {
+              addPolygonHandler();
+              resetHandler();
+            }}
+          >
+            Add polygon
+          </button>
 
           <h2>userLayout</h2>
           <ImageMapper
