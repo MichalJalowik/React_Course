@@ -144,7 +144,6 @@ const app = (props) => {
   };
 
   useEffect(() => {
-
     setReset(true)
   }, [reset])
 
@@ -185,13 +184,13 @@ const app = (props) => {
           )} */}
 
           <h2>AdminLayout</h2>
-          {reset ? <ImageMapper
+          <ImageMapper
             src={URL}
             map={adminLayout}
             width={500}
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
-          /> : null}
+          />
           <button onClick={() => resetHandler()}>Reset</button>
           <button
             onClick={() => {
