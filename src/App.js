@@ -7,23 +7,27 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
-  const [reset, setReset] = useState(false);
+  const [actualCoords, setActualCoords] = useState([]);
+  const [adminLayout, setAdminLayout] = useState({
+    name: "adminLayout",
+    areas: [
+      {
+        name: "P1",
+        shape: "poly",
+        coords: [],
+        preFillColor: "green",
+        fillColor: "blue"
+      }
+    ]
+  });
 
-  const [dots, setDots] = useState([]);
-
-  let adminLayout = {
-    name: "dots",
-    areas: dots
-  };
-
-  const [userLayoutCoords, setUserLayoutCoords] = useState([]);
   const [userLayout, setUserLayout] = useState({
     name: "userLayout",
     areas: [
       {
         name: "1",
         shape: "poly",
-        coords: userLayoutCoords,
+        coords: [0],
         preFillColor: "green",
         fillColor: "blue"
       }
@@ -105,26 +109,31 @@ const app = (props) => {
 
   const makeDot = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setDots((oldArray) => [
-      ...oldArray,
-      {
-        name: "1",
-        shape: "circle",
-        coords: [coords.x, coords.y, 3],
-        preFillColor: "black",
-        lineWidth: 11
-      }
-    ]);
-    drawPolygon(coords.x, coords.y);
+    const areasCopy = [...adminLayout.areas];
+    areasCopy.push({
+      name: "1",
+      shape: "circle",
+      coords: [coords.x, coords.y, 2],
+      preFillColor: "black",
+      lineWidth: 11
+    });
+
+    areasCopy[0].coords.push(coords.x);
+    areasCopy[0].coords.push(coords.y);
+
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
+
+    //drawPolygon(coords.x, coords.y);
   };
 
   const drawPolygon = (x, y) => {
-    const areasCopy = [...userLayout.areas];
+    const areasCopy = [...adminLayout.areas];
     areasCopy[0].coords.push(x);
     areasCopy[0].coords.push(y);
 
-    const userLayoutCopy = { ...userLayout, areas: areasCopy };
-    setUserLayoutCoords(userLayoutCopy);
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
   };
 
   // useEffect(() => {
@@ -136,16 +145,34 @@ const app = (props) => {
   // }, [userLayoutCoords]);
 
   const resetHandler = () => {
-    const areasCopy = [...userLayout.areas];
-    areasCopy[0].coords = [];
+    const areasCopy = [];
+    // areasCopy = [];
 
-    const userLayoutCopy = { ...userLayout, areas: areasCopy };
-    setUserLayoutCoords(userLayoutCopy);
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
 
-    setDots([]);
+    //setReset(!reset);
+
+    // setCoordsU();
+
+    // setDots([]);
   };
 
-  useEffect(() => {}, [reset]);
+  //useEffect(() => {setDots([]), console.log("reset")  }, [reset]);
+
+  const addPolygonHandler = (coords) => {
+    const areasCopy = [...userLayout.areas];
+    areasCopy.push({
+      name: "1",
+      shape: "poly",
+      coords: coords,
+      preFillColor: "green",
+      fillColor: "blue"
+    });
+    const userLayoutCopy = { ...userLayout, areas: areasCopy };
+
+    setUserLayout(userLayoutCopy);
+  };
 
   return (
     <div className="grid">
@@ -184,14 +211,14 @@ const app = (props) => {
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
           <button onClick={() => resetHandler()}>Reset</button>
-          <button onClick={() => null}>Add polygon</button>
+          <button onClick={() => addPolygonHandler()}>Add polygon</button>
 
           <h2>userLayout</h2>
           <ImageMapper
             src={URL}
             map={userLayout}
             width={500}
-            onImageClick={(evt) => clickedOutside(evt)}
+            //onImageClick={(evt) => clickedOutside(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
         </div>
