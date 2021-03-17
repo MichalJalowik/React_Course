@@ -7,46 +7,25 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
-  //klikajac na zdjecie AdminLayout uzupełnia sie array cordsU.
-  //Trzeba zrobic tak zeby userLayout.areas.coords = coordsU.
-  //Wtedy po zaznaczeniu koordynatów na Admin bedzie kolazywało się pole userLayout.
-  //Na komponentach nie bedzie problemu.
-  //Zrób na hooksach albo daj prosze znać szybko ze się nie da, bo już 2 dni zmarnowałem.
-  //Chce ilsc z tematem do przodu;)
-  const [coordsU, setCoordsU] = useState([]);
-
-  let UserLayout2 = {
-    name: "user-test",
-    areas: [
-      {
-        name: "T1",
-        shape: "poly",
-        coords: coordsU,
-        preFillColor: "green",
-        fillColor: "blue"
-      }
-    ]
+  const [dots, setDots] = useState([]);
+  let adminLayout = {
+    name: "dots",
+    areas: dots
   };
 
+  const [userLayoutCoords, setUserLayoutCoords] = useState([]);
   const [userLayout, setUserLayout] = useState({
-    name: "test_map",
+    name: "userLayout",
     areas: [
       {
-        name: "T1",
+        name: "1",
         shape: "poly",
-        coords: [25, 33, 27, 300, 128, 240],
+        coords: userLayoutCoords,
         preFillColor: "green",
         fillColor: "blue"
       }
     ]
   });
-
-  const [Dots, setDots] = useState([]);
-
-  let AdminLayout = {
-    name: "dots-map",
-    areas: Dots
-  };
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
@@ -60,26 +39,6 @@ const app = (props) => {
         area.coords
       )} !`
     );
-  };
-
-  const clickHandler = (x, y) => {
-    setUserLayout({
-      name: "my-map",
-      areas: [
-        {
-          name: "1",
-          shape: "poly",
-          coords: [25, 33, 27, 300, 128, 240, x, y],
-          preFillColor: "green",
-          fillColor: "blue"
-        }
-      ]
-    });
-
-    // MAP2.areas.push({name: "10",
-    // shape: "poly",
-    // coords: arr,
-    // preFillColor: "red"});
   };
 
   const clickedOutside = (evt) => {
@@ -96,8 +55,6 @@ const app = (props) => {
         lineWidth: 11
       }
     ]);
-
-    clickHandler(coords.x, coords.y);
   };
 
   const moveOnImage = (evt) => {
@@ -107,7 +64,6 @@ const app = (props) => {
   };
 
   const enterArea = (area) => {
-    //hoveredArea: area, ???
     setHoveredArea(area);
     setMsg(
       `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
@@ -157,43 +113,31 @@ const app = (props) => {
       }
     ]);
 
-    setCoordsU((oldArray) => [...oldArray, coords.x]);
-    setCoordsU((oldArray) => [...oldArray, coords.y]);
+    const areasCopy = [...userLayout.areas];
+    areasCopy[0].coords.push(coords.x);
+    areasCopy[0].coords.push(coords.y);
 
-    let newData = userLayout.areas[0].coords[0];
-    console.log("newData " + newData);
-
-    //Podmienia
-    //setUserLayout({...userLayout, name:  "xx"  });
-
-    //Dodaje newData do obiektu
-    //setUserLayout({...userLayout, newData:  "6"  });
-
-    //Zamienia areas
-    //setUserLayout({...userLayout, areas:  "xx"  });
-
-    //jak podmienic wartość w areas[0].coords[0] ???????????????
-    //setUserLayout({...userLayout, areas[0].coords[0]: 666 });
-
-    //jak dodać nowy objekt do areas ???????????????
-    //setUserLayout({...userLayout, areas: userLayout.areas.push({"dupa"})});
+    const userLayoutCopy = { ...userLayout, areas: areasCopy };
+    setUserLayoutCoords(userLayoutCopy);
   };
 
-  useEffect(() => {
+  const drawPolygon = (x, y) => {
     const areasCopy = [...userLayout.areas];
-    areasCopy[0].coords.push(50);
+    areasCopy[0].coords.push(x);
+    areasCopy[0].coords.push(y);
+
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
 
-    setUserLayout(userLayoutCopy);
-  }, [coordsU]);
-
-  const print = () => {
-    console.log(coordsU);
+    setUserLayoutCoords(userLayoutCopy);
   };
 
-  const handleChangeObjectAddArray = (coord, index) => {
-    //console.log(MAPT.areas[0].coords[0])
-  };
+  // useEffect(() => {
+  //   const areasCopy = [...userLayout.areas];
+  //   areasCopy[0].coords.push(50);
+  //   const userLayoutCopy = { ...userLayout, areas: areasCopy };
+
+  //   setUserLayoutCoords(userLayoutCopy);
+  // }, [userLayoutCoords]);
 
   return (
     <div className="grid">
@@ -227,7 +171,7 @@ const app = (props) => {
 
           <ImageMapper
             src={URL}
-            map={AdminLayout}
+            map={adminLayout}
             width={500}
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
@@ -235,7 +179,7 @@ const app = (props) => {
           <h2>userLayout</h2>
           <ImageMapper
             src={URL}
-            map={UserLayout2}
+            map={userLayout}
             width={500}
             onImageClick={(evt) => clickedOutside(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
