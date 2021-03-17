@@ -145,20 +145,19 @@ const app = (props) => {
   // }, [userLayoutCoords]);
 
   const resetHandler = () => {
-    const areasCopy = [];
-    // areasCopy = [];
+    const resetArea = [
+      {
+        name: "P1",
+        shape: "poly",
+        coords: [],
+        preFillColor: "green",
+        fillColor: "blue"
+      }
+    ];
 
-    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    const adminLayoutCopy = { ...adminLayout, areas: resetArea };
     setAdminLayout(adminLayoutCopy);
-
-    //setReset(!reset);
-
-    // setCoordsU();
-
-    // setDots([]);
   };
-
-  //useEffect(() => {setDots([]), console.log("reset")  }, [reset]);
 
   const addPolygonHandler = (coords) => {
     const areasCopy = [...userLayout.areas];
