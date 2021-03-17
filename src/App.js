@@ -15,8 +15,8 @@ const app = (props) => {
         name: "P1",
         shape: "poly",
         coords: [],
-        preFillColor: "green",
-        fillColor: "blue"
+        preFillColor: "rgba(0, 0, 255, 0.15)",
+        fillColor: "rgba(0, 0, 255, 0.2)"
       }
     ]
   });
@@ -133,8 +133,8 @@ const app = (props) => {
         name: "P1",
         shape: "poly",
         coords: [],
-        preFillColor: "green",
-        fillColor: "blue"
+        preFillColor: "rgba(0, 0, 255, 0.15)",
+        fillColor: "rgba(0, 0, 255, 0.2)"
       }
     ];
 
@@ -212,8 +212,8 @@ const app = (props) => {
             onClick={(area) => clicked(area)}
             onMouseEnter={(area) => enterArea(area)}
             onMouseLeave={(area) => leaveArea(area)}
-            lineWidth={4}
-            strokeColor={"white"}
+            lineWidth={2}
+            strokeColor={"rgba(255, 255, 255, 0.1)"}
           />
         </div>
         <pre className="message">{msg ? msg : null}</pre>
