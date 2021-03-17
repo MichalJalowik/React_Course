@@ -7,7 +7,7 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
-  const [actualCoords, setActualCoords] = useState([]);
+  const [reset, setReset] = useState(true);
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
     areas: [
@@ -43,17 +43,6 @@ const app = (props) => {
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     // setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
-
-    setDots((oldArray) => [
-      ...oldArray,
-      {
-        name: "1",
-        shape: "circle",
-        coords: [coords.x, coords.y, 3],
-        preFillColor: "black",
-        lineWidth: 11
-      }
-    ]);
   };
 
   const moveOnImage = (evt) => {
@@ -151,7 +140,13 @@ const app = (props) => {
 
     const adminLayoutCopy = { ...adminLayout, areas: resetArea };
     setAdminLayout(adminLayoutCopy);
+    setReset(!reset);
   };
+
+  useEffect(() => {
+
+    setReset(true)
+  }, [reset])
 
   const addPolygonHandler = () => {
     const areasCopy = [...userLayout.areas];
@@ -190,13 +185,13 @@ const app = (props) => {
           )} */}
 
           <h2>AdminLayout</h2>
-          <ImageMapper
+          {reset ? <ImageMapper
             src={URL}
             map={adminLayout}
             width={500}
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
-          />
+          /> : null}
           <button onClick={() => resetHandler()}>Reset</button>
           <button
             onClick={() => {
