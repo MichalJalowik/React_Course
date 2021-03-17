@@ -7,7 +7,10 @@ const app = (props) => {
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
+  const [reset, setReset] = useState(false);
+
   const [dots, setDots] = useState([]);
+
   let adminLayout = {
     name: "dots",
     areas: dots
@@ -112,13 +115,7 @@ const app = (props) => {
         lineWidth: 11
       }
     ]);
-
-    const areasCopy = [...userLayout.areas];
-    areasCopy[0].coords.push(coords.x);
-    areasCopy[0].coords.push(coords.y);
-
-    const userLayoutCopy = { ...userLayout, areas: areasCopy };
-    setUserLayoutCoords(userLayoutCopy);
+    drawPolygon(coords.x, coords.y);
   };
 
   const drawPolygon = (x, y) => {
@@ -127,7 +124,6 @@ const app = (props) => {
     areasCopy[0].coords.push(y);
 
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
-
     setUserLayoutCoords(userLayoutCopy);
   };
 
@@ -138,6 +134,18 @@ const app = (props) => {
 
   //   setUserLayoutCoords(userLayoutCopy);
   // }, [userLayoutCoords]);
+
+  const resetHandler = () => {
+    const areasCopy = [...userLayout.areas];
+    areasCopy[0].coords = [];
+
+    const userLayoutCopy = { ...userLayout, areas: areasCopy };
+    setUserLayoutCoords(userLayoutCopy);
+
+    setDots([]);
+  };
+
+  useEffect(() => {}, [reset]);
 
   return (
     <div className="grid">
@@ -168,7 +176,6 @@ const app = (props) => {
           )} */}
 
           <h2>AdminLayout</h2>
-
           <ImageMapper
             src={URL}
             map={adminLayout}
@@ -176,6 +183,9 @@ const app = (props) => {
             onImageClick={(evt) => makeDot(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
+          <button onClick={() => resetHandler()}>Reset</button>
+          <button onClick={() => null}>Add polygon</button>
+
           <h2>userLayout</h2>
           <ImageMapper
             src={URL}
