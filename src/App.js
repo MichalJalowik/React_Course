@@ -23,15 +23,7 @@ const app = (props) => {
 
   const [userLayout, setUserLayout] = useState({
     name: "userLayout",
-    areas: [
-      {
-        name: "1",
-        shape: "poly",
-        coords: [0],
-        preFillColor: "green",
-        fillColor: "blue"
-      }
-    ]
+    areas: []
   });
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
@@ -67,7 +59,9 @@ const app = (props) => {
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
+    console.log(adminLayout);
     console.log(userLayout);
+    console.log(adminLayout.areas[0]);
   };
 
   const enterArea = (area) => {
@@ -159,15 +153,9 @@ const app = (props) => {
     setAdminLayout(adminLayoutCopy);
   };
 
-  const addPolygonHandler = (coords) => {
+  const addPolygonHandler = () => {
     const areasCopy = [...userLayout.areas];
-    areasCopy.push({
-      name: "1",
-      shape: "poly",
-      coords: coords,
-      preFillColor: "green",
-      fillColor: "blue"
-    });
+    areasCopy.push(adminLayout.areas[0]);
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
 
     setUserLayout(userLayoutCopy);
@@ -217,7 +205,7 @@ const app = (props) => {
             src={URL}
             map={userLayout}
             width={500}
-            //onImageClick={(evt) => clickedOutside(evt)}
+            onImageClick={(evt) => clickedOutside(evt)}
             onImageMouseMove={(evt) => moveOnImage(evt)}
           />
         </div>
