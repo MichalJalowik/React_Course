@@ -8,6 +8,7 @@ const app = (props) => {
   const [moveMsg, setMoveMsg] = useState(null);
 
   const [reset, setReset] = useState(true);
+  const [actualCoords, setActualCoords] = useState([]);
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
     areas: [
@@ -48,9 +49,9 @@ const app = (props) => {
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
-    console.log(adminLayout);
-    console.log(userLayout);
-    console.log(adminLayout.areas[0]);
+    // console.log(adminLayout);
+    // console.log(userLayout);
+    // console.log(adminLayout.areas[0]);
   };
 
   const enterArea = (area) => {
@@ -100,6 +101,29 @@ const app = (props) => {
       preFillColor: "black",
       lineWidth: 11
     });
+
+    areasCopy[0].coords.push(coords.x);
+    areasCopy[0].coords.push(coords.y);
+
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
+
+    //drawPolygon(coords.x, coords.y);
+  };
+
+  const makeDot2 = (area, evt) => {
+    const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
+    const areasCopy = [...adminLayout.areas];
+    areasCopy.push({
+      name: "1",
+      shape: "circle",
+      coords: [coords.x, coords.y, 2],
+      preFillColor: "black",
+      lineWidth: 11
+    });
+
+    console.log(coords)
+
 
     areasCopy[0].coords.push(coords.x);
     areasCopy[0].coords.push(coords.y);
@@ -189,6 +213,8 @@ const app = (props) => {
             map={adminLayout}
             width={500}
             onImageClick={(evt) => makeDot(evt)}
+            onClick={(area, _, evt) => makeDot2(area, evt)}
+
           />
           <button onClick={() => resetHandler()}>Reset</button>
           <button
@@ -215,6 +241,16 @@ const app = (props) => {
             lineWidth={2}
             strokeColor={"rgba(255, 255, 255, 0.1)"}
           />
+
+{hoveredArea && (
+            <span
+              className="tooltip"
+              style={{ ...getTipPosition(hoveredArea) }}
+            >
+              {hoveredArea && hoveredArea.name}
+            </span>
+          )}
+
         </div>
         <pre className="message">{msg ? msg : null}</pre>
         <pre>{moveMsg ? moveMsg : null}</pre>
