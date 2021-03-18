@@ -13,24 +13,32 @@ const app = (props) => {
 
   const { register, handleSubmit } = useForm();
 
-  const [actualCoords, setActualCoords] = useState([]);
+  const basePolygonArea = [
+    {
+      name: "",
+      shape: "poly",
+      coords: [],
+      preFillColor: "rgba(0, 0, 255, 0.15)",
+      fillColor: "rgba(0, 0, 255, 0.2)",
+      hoverDescription: "",
+      clickedDescription: ""
+    }
+  ];
+
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
-    areas: [
-      {
-        name: "P1",
-        shape: "poly",
-        coords: [],
-        preFillColor: "rgba(0, 0, 255, 0.15)",
-        fillColor: "rgba(0, 0, 255, 0.2)"
-      }
-    ]
+    areas: basePolygonArea
   });
 
   const [userLayout, setUserLayout] = useState({
     name: "userLayout",
     areas: []
   });
+
+  useEffect(() => {
+    console.log(userLayout);
+    console.log(adminLayout);
+  }, [reset]);
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
@@ -156,15 +164,13 @@ const app = (props) => {
   // }, [userLayoutCoords]);
 
   const resetHandler = () => {
-    const resetArea = [
-      {
-        name: "P1",
-        shape: "poly",
-        coords: [],
-        preFillColor: "rgba(0, 0, 255, 0.15)",
-        fillColor: "rgba(0, 0, 255, 0.2)"
-      }
-    ];
+    const resetArea = basePolygonArea;
+
+    // name: "P1",
+    // shape: "poly",
+    // coords: [],
+    // preFillColor: "rgba(0, 0, 255, 0.15)",
+    // fillColor: "rgba(0, 0, 255, 0.2)"
 
     const adminLayoutCopy = { ...adminLayout, areas: resetArea };
     setAdminLayout(adminLayoutCopy);
@@ -183,6 +189,7 @@ const app = (props) => {
     setUserLayout(userLayoutCopy);
 
     resetHandler();
+
     console.log(data);
   };
 
@@ -219,11 +226,11 @@ const app = (props) => {
 
               <form onSubmit={handleSubmit(addPolygonHandler)}>
                 <label>Name</label>
-                <input name="polygonNo" ref={register}></input>
+                <input name="name" ref={register}></input>
                 <label>Hover Description</label>
                 <input name="hoverDescription" ref={register}></input>
                 <label>Clicked Desctiption</label>
-                <input name="Clicked Description" ref={register}></input>
+                <input name="clickedDescription" ref={register}></input>
 
                 <button>Add Polygon</button>
               </form>
