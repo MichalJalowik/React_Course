@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import "./App.css";
 import ImageMapper from "react-image-mapper";
 
@@ -9,6 +10,8 @@ const app = (props) => {
 
   const [reset, setReset] = useState(true);
   const [adminMode, setAdminMode] = useState(false);
+
+  const { register, handleSubmit } = useForm();
 
   const [actualCoords, setActualCoords] = useState([]);
   const [adminLayout, setAdminLayout] = useState({
@@ -172,33 +175,25 @@ const app = (props) => {
     setReset(true);
   }, [reset]);
 
-  const addPolygonHandler = () => {
+  const addPolygonHandler = (data) => {
     const areasCopy = [...userLayout.areas];
     areasCopy.push(adminLayout.areas[0]);
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
 
     setUserLayout(userLayoutCopy);
+
+    resetHandler();
+    console.log(data);
+  };
+
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
   };
 
   return (
     <div className="grid">
       <div className="presenter">
         <div style={{ position: "relative" }}>
-          {/* <ImageMapper
-            src={URL}
-            map={MAP2}
-            width={500}
-            onLoad={() => load()}
-            onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
-            onClick={(area) => clicked(area)}
-            onMouseEnter={(area) => enterArea(area)}
-            onMouseLeave={(area) => leaveArea(area)}
-            onImageClick={(evt) => clickedOutside(evt)}
-            onImageMouseMove={(evt) => moveOnImage(evt)}
-            lineWidth={4}
-            strokeColor={"white"}
-          /> */}
-
           {/* {hoveredArea && (
             <span
               className="tooltip"
@@ -221,14 +216,17 @@ const app = (props) => {
                 onClick={(area, _, evt) => makeDot2(area, evt)}
               />
               <button onClick={() => resetHandler()}>Reset</button>
-              <button
-                onClick={() => {
-                  addPolygonHandler();
-                  resetHandler();
-                }}
-              >
-                Add polygon
-              </button>
+
+              <form onSubmit={handleSubmit(addPolygonHandler)}>
+                <label>Name</label>
+                <input name="polygonNo" ref={register}></input>
+                <label>Hover Description</label>
+                <input name="hoverDescription" ref={register}></input>
+                <label>Clicked Desctiption</label>
+                <input name="Clicked Description" ref={register}></input>
+
+                <button>Add Polygon</button>
+              </form>
             </div>
           ) : null}
 
