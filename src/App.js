@@ -1,115 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import "./App.css";
 import ImageMapper from "react-image-mapper";
 
-//ES6 way
 const app = (props) => {
   const [msg, setMsg] = useState(null);
   const [hoveredArea, setHoveredArea] = useState(null);
   const [moveMsg, setMoveMsg] = useState(null);
 
+  const [reset, setReset] = useState(true);
+  const [adminMode, setAdminMode] = useState(false);
 
- 
+  const { register, handleSubmit } = useForm();
 
-  const [MAP2, setMAP2] = useState({
-    name: "my-map",
+  const [actualCoords, setActualCoords] = useState([]);
+  const [adminLayout, setAdminLayout] = useState({
+    name: "adminLayout",
     areas: [
       {
-        name: "1",
+        name: "P1",
         shape: "poly",
-        coords: [25, 33, 27, 300, 128, 240],
-        preFillColor: "green",
-        fillColor: "blue"
-      },
-      {
-        name: "2",
-        shape: "poly",
-        coords: [219, 118, 220, 210, 283, 210, 284, 119],
-        preFillColor: "pink"
-      },
-      {
-        name: "3",
-        shape: "poly",
-        coords: [381, 241, 383, 94, 462, 53, 457, 282],
-        fillColor: "yellow"
-      },
-      {
-        name: "4",
-        shape: "poly",
-        coords: [245, 285, 290, 285, 274, 239, 249, 238],
-        preFillColor: "red"
-      },
-      { name: "5", shape: "circle", coords: [170, 100, 25] }
+        coords: [],
+        preFillColor: "rgba(0, 0, 255, 0.15)",
+        fillColor: "rgba(0, 0, 255, 0.2)"
+      }
     ]
   });
 
-const [MAPT, setMAPT] = useState({
-  name: "test_map",
-  areas:[{
-    name: "T1",
-    shape: "poly",
-    coords: [25, 33, 27, 300, 128, 240],
-    preFillColor: "green",
-    fillColor: "blue"
-  }]
-});
-
-  const [Dots, setDots] = useState([]);
-
-  let DotsX = {
-    name: "dots-map",
-    areas: Dots
-  };
-
-  let MAP = {
-    name: "my-map",
-    areas: [
-      {
-        name: "1",
-        shape: "poly",
-        coords: [25, 33, 27, 300, 128, 240, 128, 94],
-        preFillColor: "green",
-        fillColor: "#0000ff"
-      },
-      {
-        name: "2",
-        shape: "poly",
-        coords: [219, 118, 220, 210, 283, 210, 284, 119],
-        preFillColor: "pink",
-        lineWidth: 10,
-        strokeColor: "#0000ff"
-      },
-      {
-        name: "3",
-        shape: "poly",
-        coords: [381, 241, 383, 94, 462, 53, 457, 282],
-        preFillColor: "yellow", // this is mandatory for stroke color to work
-        lineWidth: 10,
-        strokeColor: "#6afd09"
-      },
-      {
-        name: "4",
-        shape: "poly",
-        coords: [245, 285, 290, 285, 274, 239, 249, 238],
-        preFillColor: "red"
-      },
-      {
-        name: "5",
-        shape: "circle",
-        coords: [170, 100, 25],
-        preFillColor: "rgb(255,255,255,0.3)",
-        lineWidth: 2
-      },
-      {
-        name: "6",
-        shape: "rect",
-        coords: [270, 100, 200, 50],
-        lineWidth: 2,
-        preFillColor: "rgba(255, 255, 255, 0.3)",
-        strokeColor: "#6afd09"
-      }
-    ]
-  };
+  const [userLayout, setUserLayout] = useState({
+    name: "userLayout",
+    areas: []
+  });
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
@@ -125,68 +46,20 @@ const [MAPT, setMAPT] = useState({
     );
   };
 
-  const clickHandler = (x,y) => {
-    setMAP2({
-      name: "my-map",
-      areas: [
-        {
-          name: "1",
-          shape: "poly",
-          coords: [25, 33, 27, 300, 128, 240, x,y],
-          preFillColor: "green",
-          fillColor: "blue"
-        },
-        {
-          name: "2",
-          shape: "poly",
-          coords: [219, 118, 220, 210, 283, 210, 284, 119],
-          preFillColor: "pink"
-        },
-        {
-          name: "3",
-          shape: "poly",
-          coords: [381, 241, 383, 94, 462, 53, 457, 282],
-          fillColor: "yellow"
-        },
-        {
-          name: "4",
-          shape: "poly",
-          coords: [245, 285, 290, 285, 274, 239, 249, 238],
-          preFillColor: "red"
-        },
-        { name: "5", shape: "circle", coords: [170, 100, 25] }
-      ]
-    });
-    // MAP2.areas.push({name: "10",
-    // shape: "poly",
-    // coords: arr,
-    // preFillColor: "red"});
-  };
-
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
-    setDots((oldArray) => [
-      ...oldArray,
-      {
-        name: "1",
-        shape: "circle",
-        coords: [coords.x, coords.y, 3],
-        preFillColor: "black",
-        lineWidth: 11
-      }
-    ]);
-
-    clickHandler(coords.x, coords.y);
+    // setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
   };
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
     setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
+    // console.log(adminLayout);
+    // console.log(userLayout);
+    // console.log(adminLayout.areas[0]);
   };
 
   const enterArea = (area) => {
-    //hoveredArea: area, ???
     setHoveredArea(area);
     setMsg(
       `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
@@ -225,74 +98,153 @@ const [MAPT, setMAPT] = useState({
 
   const makeDot = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setDots((oldArray) => [
-      ...oldArray,
+    const areasCopy = [...adminLayout.areas];
+    areasCopy.push({
+      name: "1",
+      shape: "circle",
+      coords: [coords.x, coords.y, 2],
+      preFillColor: "black",
+      lineWidth: 11
+    });
+
+    areasCopy[0].coords.push(coords.x);
+    areasCopy[0].coords.push(coords.y);
+
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
+
+    //drawPolygon(coords.x, coords.y);
+  };
+
+  const makeDot2 = (area, evt) => {
+    const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
+    const areasCopy = [...adminLayout.areas];
+    areasCopy.push({
+      name: "1",
+      shape: "circle",
+      coords: [coords.x, coords.y, 2],
+      preFillColor: "black",
+      lineWidth: 11
+    });
+
+    console.log(coords);
+
+    areasCopy[0].coords.push(coords.x);
+    areasCopy[0].coords.push(coords.y);
+
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
+
+    //drawPolygon(coords.x, coords.y);
+  };
+
+  const drawPolygon = (x, y) => {
+    const areasCopy = [...adminLayout.areas];
+    areasCopy[0].coords.push(x);
+    areasCopy[0].coords.push(y);
+
+    const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
+    setAdminLayout(adminLayoutCopy);
+  };
+
+  // useEffect(() => {
+  //   const areasCopy = [...userLayout.areas];
+  //   areasCopy[0].coords.push(50);
+  //   const userLayoutCopy = { ...userLayout, areas: areasCopy };
+
+  //   setUserLayoutCoords(userLayoutCopy);
+  // }, [userLayoutCoords]);
+
+  const resetHandler = () => {
+    const resetArea = [
       {
-        name: "1",
-        shape: "circle",
-        coords: [coords.x, coords.y, 3],
-        preFillColor: "black",
-        lineWidth: 11
+        name: "P1",
+        shape: "poly",
+        coords: [],
+        preFillColor: "rgba(0, 0, 255, 0.15)",
+        fillColor: "rgba(0, 0, 255, 0.2)"
       }
-    ]);
-    handleChangeObjectAddArray(666);
-    
-   
+    ];
 
-
+    const adminLayoutCopy = { ...adminLayout, areas: resetArea };
+    setAdminLayout(adminLayoutCopy);
+    setReset(!reset);
   };
 
-  const [Dots2, setDots2] = useState([40]);
+  useEffect(() => {
+    setReset(true);
+  }, [reset]);
 
-  let DotsT = {
-    name: "dots-map2",
-    areas: [],
+  const addPolygonHandler = (data) => {
+    const areasCopy = [...userLayout.areas];
+    areasCopy.push(adminLayout.areas[0]);
+    const userLayoutCopy = { ...userLayout, areas: areasCopy };
+
+    setUserLayout(userLayoutCopy);
+
+    resetHandler();
+    console.log(data);
   };
-  
 
-  const handleChangeObjectAddArray = (coord, index) => {
-    DotsT.areas.push(4)
-    setDots2(DotsT)
-    //console.log(MAPT.areas[0].coords[0])
-    {console.log(Dots2)}
-  
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
   };
 
   return (
     <div className="grid">
       <div className="presenter">
         <div style={{ position: "relative" }}>
+          {/* {hoveredArea && (
+            <span
+              className="tooltip"
+              style={{ ...getTipPosition(hoveredArea) }}
+            >
+              {hoveredArea && hoveredArea.name}
+            </span>
+          )} */}
+          <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
+          {adminMode ? <div>On</div> : <div>Off</div>}
+
+          {adminMode ? (
+            <div>
+              <h2>Admin layout</h2>
+              <ImageMapper
+                src={URL}
+                map={adminLayout}
+                width={500}
+                onImageClick={(evt) => makeDot(evt)}
+                onClick={(area, _, evt) => makeDot2(area, evt)}
+              />
+              <button onClick={() => resetHandler()}>Reset</button>
+
+              <form onSubmit={handleSubmit(addPolygonHandler)}>
+                <label>Name</label>
+                <input name="polygonNo" ref={register}></input>
+                <label>Hover Description</label>
+                <input name="hoverDescription" ref={register}></input>
+                <label>Clicked Desctiption</label>
+                <input name="Clicked Description" ref={register}></input>
+
+                <button>Add Polygon</button>
+              </form>
+            </div>
+          ) : null}
+
+          <h2>User layout</h2>
           <ImageMapper
             src={URL}
-            map={MAP2}
+            map={userLayout}
             width={500}
+            onImageClick={(evt) => clickedOutside(evt)}
+            onImageMouseMove={(evt) => moveOnImage(evt)}
             onLoad={() => load()}
             onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
             onClick={(area) => clicked(area)}
             onMouseEnter={(area) => enterArea(area)}
             onMouseLeave={(area) => leaveArea(area)}
-            onImageClick={(evt) => clickedOutside(evt)}
-            onImageMouseMove={(evt) => moveOnImage(evt)}
-            lineWidth={4}
-            strokeColor={"white"}
+            lineWidth={2}
+            strokeColor={"rgba(255, 255, 255, 0.1)"}
           />
-
-          <ImageMapper
-            src={URL}
-            map={DotsX}
-            width={500}
-            onImageClick={(evt) => makeDot(evt)}
-            onImageMouseMove={(evt) => moveOnImage(evt)}
-            
-          />
-
-          <ImageMapper
-            src={URL}
-            map={MAPT}
-            width={500}
-            
-          />
-          
 
           {hoveredArea && (
             <span
@@ -303,13 +255,11 @@ const [MAPT, setMAPT] = useState({
             </span>
           )}
         </div>
-
         <pre className="message">{msg ? msg : null}</pre>
         <pre>{moveMsg ? moveMsg : null}</pre>
       </div>
     </div>
   );
-  //return React.createElement('div', {className:"App"}, React.createElement('h1',null,'Hi 2 !!!'))
 };
 
 export default app;
