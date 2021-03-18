@@ -208,20 +208,11 @@ const app = (props) => {
   return (
     <div className="grid">
       <div className="presenter">
+        <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
+        {adminMode ? <div>On</div> : <div>Off</div>}
         <div style={{ position: "relative" }}>
-          {/* {hoveredArea && (
-            <span
-              className="tooltip"
-              style={{ ...getTipPosition(hoveredArea) }}
-            >
-              {hoveredArea && hoveredArea.name}
-            </span>
-          )} */}
-          <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
-          {adminMode ? <div>On</div> : <div>Off</div>}
-
           {adminMode ? (
-            <div>
+            <div className="presenter">
               <h2>Admin layout</h2>
               <ImageMapper
                 src={URL}
@@ -244,8 +235,9 @@ const app = (props) => {
               </form>
             </div>
           ) : null}
-
-          <h2>User layout</h2>
+        </div>
+        <h2>User layout</h2>
+        <div style={{ position: "relative" }}>
           <ImageMapper
             src={URL}
             map={userLayout}
@@ -270,6 +262,7 @@ const app = (props) => {
             </span>
           )}
         </div>
+
         <pre className="message">{msg ? msg : null}</pre>
         <pre>{moveMsg ? moveMsg : null}</pre>
       </div>
