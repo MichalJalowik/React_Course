@@ -8,6 +8,8 @@ const app = (props) => {
   const [moveMsg, setMoveMsg] = useState(null);
 
   const [reset, setReset] = useState(true);
+  const [adminMode, setAdminMode] = useState(false);
+
   const [actualCoords, setActualCoords] = useState([]);
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
@@ -122,8 +124,7 @@ const app = (props) => {
       lineWidth: 11
     });
 
-    console.log(coords)
-
+    console.log(coords);
 
     areasCopy[0].coords.push(coords.x);
     areasCopy[0].coords.push(coords.y);
@@ -168,8 +169,8 @@ const app = (props) => {
   };
 
   useEffect(() => {
-    setReset(true)
-  }, [reset])
+    setReset(true);
+  }, [reset]);
 
   const addPolygonHandler = () => {
     const areasCopy = [...userLayout.areas];
@@ -206,25 +207,30 @@ const app = (props) => {
               {hoveredArea && hoveredArea.name}
             </span>
           )} */}
+          <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
+          {adminMode ? <div>On</div> : <div>Off</div>}
 
-          <h2>Admin layout</h2>
-          <ImageMapper
-            src={URL}
-            map={adminLayout}
-            width={500}
-            onImageClick={(evt) => makeDot(evt)}
-            onClick={(area, _, evt) => makeDot2(area, evt)}
-
-          />
-          <button onClick={() => resetHandler()}>Reset</button>
-          <button
-            onClick={() => {
-              addPolygonHandler();
-              resetHandler();
-            }}
-          >
-            Add polygon
-          </button>
+          {adminMode ? (
+            <div>
+              <h2>Admin layout</h2>
+              <ImageMapper
+                src={URL}
+                map={adminLayout}
+                width={500}
+                onImageClick={(evt) => makeDot(evt)}
+                onClick={(area, _, evt) => makeDot2(area, evt)}
+              />
+              <button onClick={() => resetHandler()}>Reset</button>
+              <button
+                onClick={() => {
+                  addPolygonHandler();
+                  resetHandler();
+                }}
+              >
+                Add polygon
+              </button>
+            </div>
+          ) : null}
 
           <h2>User layout</h2>
           <ImageMapper
@@ -242,7 +248,7 @@ const app = (props) => {
             strokeColor={"rgba(255, 255, 255, 0.1)"}
           />
 
-{hoveredArea && (
+          {hoveredArea && (
             <span
               className="tooltip"
               style={{ ...getTipPosition(hoveredArea) }}
@@ -250,7 +256,6 @@ const app = (props) => {
               {hoveredArea && hoveredArea.name}
             </span>
           )}
-
         </div>
         <pre className="message">{msg ? msg : null}</pre>
         <pre>{moveMsg ? moveMsg : null}</pre>
