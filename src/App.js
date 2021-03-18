@@ -183,14 +183,22 @@ const app = (props) => {
 
   const addPolygonHandler = (data) => {
     const areasCopy = [...userLayout.areas];
+
     areasCopy.push(adminLayout.areas[0]);
+
+    //console.log(data.name)
+    //console.log(areasCopy[0].name)
+    adminLayout.areas[0].name = data.name;
+    adminLayout.areas[0].hoverDescription = data.hoverDescription;
+    adminLayout.areas[0].clickedDescription = data.clickedDescription;
+
+    //console.log(areasCopy)
+
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
 
     setUserLayout(userLayoutCopy);
 
     resetHandler();
-
-    console.log(data);
   };
 
   const onSubmit = (data) => {
