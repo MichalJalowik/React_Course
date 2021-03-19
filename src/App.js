@@ -13,24 +13,32 @@ const app = (props) => {
 
   const { register, handleSubmit } = useForm();
 
-  const [actualCoords, setActualCoords] = useState([]);
+  const basePolygonArea = [
+    {
+      name: "",
+      shape: "poly",
+      coords: [],
+      preFillColor: "rgba(0, 0, 255, 0.15)",
+      fillColor: "rgba(0, 0, 255, 0.2)",
+      hoverDescription: "",
+      clickedDescription: ""
+    }
+  ];
+
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
-    areas: [
-      {
-        name: "P1",
-        shape: "poly",
-        coords: [],
-        preFillColor: "rgba(0, 0, 255, 0.15)",
-        fillColor: "rgba(0, 0, 255, 0.2)"
-      }
-    ]
+    areas: basePolygonArea
   });
 
   const [userLayout, setUserLayout] = useState({
     name: "userLayout",
     areas: []
   });
+
+  useEffect(() => {
+    console.log(userLayout);
+    console.log(adminLayout);
+  }, [reset]);
 
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
@@ -156,15 +164,13 @@ const app = (props) => {
   // }, [userLayoutCoords]);
 
   const resetHandler = () => {
-    const resetArea = [
-      {
-        name: "P1",
-        shape: "poly",
-        coords: [],
-        preFillColor: "rgba(0, 0, 255, 0.15)",
-        fillColor: "rgba(0, 0, 255, 0.2)"
-      }
-    ];
+    const resetArea = basePolygonArea;
+
+    // name: "P1",
+    // shape: "poly",
+    // coords: [],
+    // preFillColor: "rgba(0, 0, 255, 0.15)",
+    // fillColor: "rgba(0, 0, 255, 0.2)"
 
     const adminLayoutCopy = { ...adminLayout, areas: resetArea };
     setAdminLayout(adminLayoutCopy);
@@ -177,13 +183,22 @@ const app = (props) => {
 
   const addPolygonHandler = (data) => {
     const areasCopy = [...userLayout.areas];
+
     areasCopy.push(adminLayout.areas[0]);
+
+    //console.log(data.name)
+    //console.log(areasCopy[0].name)
+    adminLayout.areas[0].name = data.name;
+    adminLayout.areas[0].hoverDescription = data.hoverDescription;
+    adminLayout.areas[0].clickedDescription = data.clickedDescription;
+
+    //console.log(areasCopy)
+
     const userLayoutCopy = { ...userLayout, areas: areasCopy };
 
     setUserLayout(userLayoutCopy);
 
     resetHandler();
-    console.log(data);
   };
 
   const onSubmit = (data) => {
@@ -193,21 +208,12 @@ const app = (props) => {
   return (
     <div className="grid">
       <div className="presenter">
+        <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
+        {adminMode ? <div>On</div> : <div>Off</div>}
         <div style={{ position: "relative" }}>
-          {/* {hoveredArea && (
-            <span
-              className="tooltip"
-              style={{ ...getTipPosition(hoveredArea) }}
-            >
-              {hoveredArea && hoveredArea.name}
-            </span>
-          )} */}
-          <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
-          {adminMode ? <div>On</div> : <div>Off</div>}
-
           {adminMode ? (
-            <div>
-              <h2>Admin layout</h2>
+            <div className="presenter">
+              <h2>Admin Layout</h2>
               <ImageMapper
                 src={URL}
                 map={adminLayout}
@@ -219,18 +225,19 @@ const app = (props) => {
 
               <form onSubmit={handleSubmit(addPolygonHandler)}>
                 <label>Name</label>
-                <input name="polygonNo" ref={register}></input>
+                <input name="name" ref={register}></input>
                 <label>Hover Description</label>
                 <input name="hoverDescription" ref={register}></input>
                 <label>Clicked Desctiption</label>
-                <input name="Clicked Description" ref={register}></input>
+                <input name="clickedDescription" ref={register}></input>
 
                 <button>Add Polygon</button>
               </form>
             </div>
           ) : null}
-
-          <h2>User layout</h2>
+        </div>
+        <h2>User layout</h2>
+        <div style={{ position: "relative" }}>
           <ImageMapper
             src={URL}
             map={userLayout}
@@ -255,6 +262,7 @@ const app = (props) => {
             </span>
           )}
         </div>
+
         <pre className="message">{msg ? msg : null}</pre>
         <pre>{moveMsg ? moveMsg : null}</pre>
       </div>
