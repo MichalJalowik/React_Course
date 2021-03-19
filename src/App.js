@@ -227,7 +227,7 @@ const app = (props) => {
                 Reset
               </button>
 
-              <form className="form" onSubmit={handleSubmit(addPolygonHandler)}>
+              <form onSubmit={handleSubmit(addPolygonHandler)}>
                 <label>Name</label>
                 <input name="name" ref={register}></input>
                 <label>Hover Description</label>
