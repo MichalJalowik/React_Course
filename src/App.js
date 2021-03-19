@@ -110,9 +110,9 @@ const app = (props) => {
     areasCopy.push({
       name: "1",
       shape: "circle",
-      coords: [coords.x, coords.y, 2],
-      preFillColor: "black",
-      lineWidth: 11
+      coords: [coords.x, coords.y, 1],
+      preFillColor: "yellow",
+      lineWidth: 6
     });
 
     areasCopy[0].coords.push(coords.x);
@@ -130,9 +130,9 @@ const app = (props) => {
     areasCopy.push({
       name: "1",
       shape: "circle",
-      coords: [coords.x, coords.y, 2],
-      preFillColor: "black",
-      lineWidth: 11
+      coords: [coords.x, coords.y, 1],
+      preFillColor: "yellow",
+      lineWidth: 6
     });
 
     console.log(coords);
@@ -208,7 +208,9 @@ const app = (props) => {
   return (
     <div className="grid">
       <div className="presenter">
-        <button onClick={() => setAdminMode(!adminMode)}>Admin Mode</button>
+        <button type="submit" onClick={() => setAdminMode(!adminMode)}>
+          Admin Mode
+        </button>
         {adminMode ? <div>On</div> : <div>Off</div>}
         <div style={{ position: "relative" }}>
           {adminMode ? (
@@ -221,17 +223,18 @@ const app = (props) => {
                 onImageClick={(evt) => makeDot(evt)}
                 onClick={(area, _, evt) => makeDot2(area, evt)}
               />
-              <button onClick={() => resetHandler()}>Reset</button>
+              <button type="submit" onClick={() => resetHandler()}>
+                Reset
+              </button>
 
-              <form onSubmit={handleSubmit(addPolygonHandler)}>
+              <form className="form" onSubmit={handleSubmit(addPolygonHandler)}>
                 <label>Name</label>
                 <input name="name" ref={register}></input>
                 <label>Hover Description</label>
                 <input name="hoverDescription" ref={register}></input>
                 <label>Clicked Desctiption</label>
                 <input name="clickedDescription" ref={register}></input>
-
-                <button>Add Polygon</button>
+                <button type="submit">Add Polygon</button>
               </form>
             </div>
           ) : null}
