@@ -215,7 +215,7 @@ const app = (props) => {
         <div style={{ position: "relative" }}>
           {adminMode ? (
             <div className="presenter">
-              <h2>Admin Layout</h2>
+              <h2>Admin layout</h2>
               <ImageMapper
                 src={URL}
                 map={adminLayout}
