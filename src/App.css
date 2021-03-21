@@ -21,11 +21,11 @@ input[type="submit"] {
   color: white;
   text-transform: uppercase;
   border: none;
-  margin-top: 10px;
-  padding: 20px;
-  font-size: 16px;
+
+  padding: 10px;
+  font-size: 12px;
   font-weight: 100;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
 }
 
 button[type="submit"]:hover,
@@ -56,22 +56,6 @@ input[type="submit"] {
   -webkit-appearance: none;
 }
 
-.App {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-button[type="button"] {
-  display: block;
-  appearance: none;
-  background: #333;
-  color: white;
-  border: none;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
-
 hr {
   margin-top: 5px;
 }
@@ -79,18 +63,17 @@ hr {
 button {
   display: block;
   appearance: none;
-  margin-top: 5px;
+  margin: 5px;
   border: 1px solid #333;
-  margin-bottom: 5px;
   text-transform: uppercase;
   padding: 10px 20px;
   border-radius: 4px;
 }
 
 input {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
+  display: grid;
+  
+  width: 300px;
   border-radius: 4px;
   border: 1px solid white;
   padding: 5px 7px;
@@ -134,25 +117,40 @@ a:hover {
   padding: 1em;
 }
 
-.grid {
-  margin-top: 50px;
+.main {
+  display: grid;
+  margin-top: 20px;
+  grid-row-gap: 20px;
+}
+
+.twoButtons {
+
+
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row;
+  justify-content: flex-start;
+
+}
+
+
+.mainButton {
+  margin-left: 20px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
   background-color: #d6c0a3;
-  margin: 30px;
-  border-radius: 10px;
-  border: 3px solid #8a550f;
+  margin: 0px;
+  border-top: 1px solid #8a550f;
 }
 
 .presenter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 9999;
+
   border: 3px solid 8a550f;
-  border-radius: 5px;
-  padding: 10px;
 }
 
 .source {
@@ -178,11 +176,11 @@ h6 {
   color: #222;
   font-weight: 100;
   margin: 0.5em 0;
+  text-align: left;
+  margin-left: 10px;
 }
 
-pre.message {
-  white-space: normal;
-  width: 600px;
+.message {
   text-align: center;
 }
 
@@ -190,4 +188,17 @@ pre.message {
   margin: 15px 0;
   font-style: italic;
   color: #999;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 10px 1fr 10px;
+  grid-template-rows: 1fr;
+}
+
+.formButton {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
 }

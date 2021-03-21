@@ -56,12 +56,12 @@ const app = (props) => {
 
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    // setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
+    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
   };
 
   const moveOnImage = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
+    setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)}`);
     // console.log(adminLayout);
     // console.log(userLayout);
     // console.log(adminLayout.areas[0]);
@@ -120,8 +120,6 @@ const app = (props) => {
 
     const adminLayoutCopy = { ...adminLayout, areas: areasCopy };
     setAdminLayout(adminLayoutCopy);
-
-    //drawPolygon(coords.x, coords.y);
   };
 
   const makeDot2 = (area, evt) => {
@@ -206,69 +204,78 @@ const app = (props) => {
   };
 
   return (
-    <div className="grid">
-      <div className="presenter">
+    <div className="main">
+      <div className="mainButton">
         <button type="submit" onClick={() => setAdminMode(!adminMode)}>
-          Admin Mode
+          {adminMode ? "Admin mode on" : "Admin mode Off"}
         </button>
-        {adminMode ? <div>On</div> : <div>Off</div>}
-        <div style={{ position: "relative" }}>
-          {adminMode ? (
-            <div className="presenter">
-              <h2>Admin Layoutt</h2>
+      </div>
 
-              <ImageMapper
-                src={URL}
-                map={adminLayout}
-                width={500}
-                onImageClick={(evt) => makeDot(evt)}
-                onClick={(area, _, evt) => makeDot2(area, evt)}
-              />
-              <button type="submit" onClick={() => resetHandler()}>
-                Reset
-              </button>
-
-              <form onSubmit={handleSubmit(addPolygonHandler)}>
-                <label>Name</label>
-                <input name="name" ref={register}></input>
-                <label>Hover Description</label>
-                <input name="hoverDescription" ref={register}></input>
-                <label>Clicked Desctiption</label>
-                <input name="clickedDescription" ref={register}></input>
+      {adminMode ? (
+        <div className="grid">
+          <h2>Admin layout:</h2>
+          <div className="presenter">
+            <ImageMapper
+              src={URL}
+              map={adminLayout}
+              width={500}
+              onImageClick={(evt) => makeDot(evt)}
+              onClick={(area, _, evt) => makeDot2(area, evt)}
+            />
+          </div>
+          <div className="form">
+            <div></div>
+            <form onSubmit={handleSubmit(addPolygonHandler)}>
+              <label>Name</label>
+              <input name="name" ref={register}></input>
+              <label>Hover Description</label>
+              <input name="hoverDescription" ref={register}></input>
+              <label>Clicked Desctiption</label>
+              <input name="clickedDescription" ref={register}></input>
+              <div className="twoButtons">
                 <button type="submit">Add Polygon</button>
-              </form>
-            </div>
-          ) : null}
+                <button type="submit" onClick={() => resetHandler()}>
+                  Reset
+                </button>
+              </div>
+            </form>
+            <div></div>
+            <div className="formButton"></div>
+          </div>
         </div>
-        <h2>User layout</h2>
-        <div style={{ position: "relative" }}>
-          <ImageMapper
-            src={URL}
-            map={userLayout}
-            width={500}
-            onImageClick={(evt) => clickedOutside(evt)}
-            onImageMouseMove={(evt) => moveOnImage(evt)}
-            onLoad={() => load()}
-            onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
-            onClick={(area) => clicked(area)}
-            onMouseEnter={(area) => enterArea(area)}
-            onMouseLeave={(area) => leaveArea(area)}
-            lineWidth={2}
-            strokeColor={"rgba(255, 255, 255, 0.1)"}
-          />
+      ) : null}
 
-          {hoveredArea && (
-            <span
-              className="tooltip"
-              style={{ ...getTipPosition(hoveredArea) }}
-            >
-              {hoveredArea && hoveredArea.name}
-            </span>
-          )}
+      <div className="grid">
+        <h2>User layout:</h2>
+        <div className="presenter">
+          <div style={{ position: "relative" }}>
+            <ImageMapper
+              src={URL}
+              map={userLayout}
+              width={500}
+              onImageClick={(evt) => clickedOutside(evt)}
+              onImageMouseMove={(evt) => moveOnImage(evt)}
+              onLoad={() => load()}
+              onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
+              onClick={(area) => clicked(area)}
+              onMouseEnter={(area) => enterArea(area)}
+              onMouseLeave={(area) => leaveArea(area)}
+              lineWidth={2}
+              strokeColor={"rgba(255, 255, 255, 0.1)"}
+            />
+
+            {hoveredArea && (
+              <span
+                className="tooltip"
+                style={{ ...getTipPosition(hoveredArea) }}
+              >
+                {hoveredArea && hoveredArea.name}
+              </span>
+            )}
+            <div className="message">{msg ? msg : null}</div>
+            <div>{moveMsg ? moveMsg : null}</div>
+          </div>
         </div>
-
-        <pre className="message">{msg ? msg : null}</pre>
-        <pre>{moveMsg ? moveMsg : null}</pre>
       </div>
     </div>
   );
