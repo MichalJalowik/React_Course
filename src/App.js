@@ -21,18 +21,18 @@ const app = (props) => {
       preFillColor: "rgba(0, 0, 255, 0.15)",
       fillColor: "rgba(0, 0, 255, 0.2)",
       hoverDescription: "",
-      clickedDescription: "",
-    },
+      clickedDescription: ""
+    }
   ];
 
   const [adminLayout, setAdminLayout] = useState({
     name: "adminLayout",
-    areas: basePolygonArea,
+    areas: basePolygonArea
   });
 
   const [userLayout, setUserLayout] = useState({
     name: "userLayout",
-    areas: [],
+    areas: []
   });
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const app = (props) => {
       shape: "circle",
       coords: [coords.x, coords.y, 1],
       preFillColor: "yellow",
-      lineWidth: 6,
+      lineWidth: 6
     });
 
     areasCopy[0].coords.push(coords.x);
@@ -130,7 +130,7 @@ const app = (props) => {
       shape: "circle",
       coords: [coords.x, coords.y, 1],
       preFillColor: "yellow",
-      lineWidth: 6,
+      lineWidth: 6
     });
 
     console.log(coords);
@@ -233,14 +233,13 @@ const app = (props) => {
               <label>Clicked Desctiption</label>
               <input name="clickedDescription" ref={register}></input>
               <div className="twoButtons">
+                <div></div>
                 <button type="submit">Add Polygon</button>
                 <button type="submit" onClick={() => resetHandler()}>
                   Reset
                 </button>
               </div>
             </form>
-            <div></div>
-            <div className="formButton"></div>
           </div>
         </div>
       ) : null}

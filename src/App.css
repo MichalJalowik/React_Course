@@ -63,7 +63,7 @@ hr {
 button {
   display: block;
   appearance: none;
-  margin: 5px;
+  margin: 5px 5px;
   border: 1px solid #333;
   text-transform: uppercase;
   padding: 10px 20px;
@@ -71,13 +71,13 @@ button {
 }
 
 input {
-  display: grid;
-  
-  width: 300px;
+  display: flex;
+  width: 90%;
   border-radius: 4px;
   border: 1px solid white;
   padding: 5px 7px;
   margin-bottom: 2px;
+  margin-left: 5px;
   font-size: 16px;
 }
 
@@ -124,14 +124,10 @@ a:hover {
 }
 
 .twoButtons {
-
-
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
-
 }
-
 
 .mainButton {
   margin-left: 20px;
@@ -192,13 +188,10 @@ h6 {
 
 .form {
   display: grid;
-  grid-template-columns: 10px 1fr 10px;
-  grid-template-rows: 1fr;
+  grid-template-columns: 25px 1fr 25px;
 }
 
-.formButton {
-  display: flex;
-  flex-flow: column;
-  justify-content: space-around;
-  align-items: center;
+.twoButtons {
+  display: grid;
+  grid-template-columns: 0px 150px 150px;
 }
