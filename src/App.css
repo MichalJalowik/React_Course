@@ -178,6 +178,12 @@ h6 {
 
 .message {
   text-align: center;
+  margin: 5px;
+}
+
+.userMessage {
+  text-align: center;
+  margin: 5px;
 }
 
 .hint {

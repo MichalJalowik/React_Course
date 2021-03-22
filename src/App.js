@@ -43,20 +43,24 @@ const app = (props) => {
   var URL = "https://c1.staticflickr.com/5/4052/4503898393_303cfbc9fd_b.jpg";
 
   const load = () => {
-    setMsg("Interact with image !");
+    if (adminLayout.areas[0].coords.length === 0) {
+      setMsg("Use Admin Mode to add some areas !");
+    } else {
+      setMsg("Let's interact with image !");
+    }
   };
 
   const clicked = (area) => {
     setMsg(
-      `You clicked on ${area.shape} ${area.name} at coords ${JSON.stringify(
-        area.coords
-      )} !`
+      `You clicked on ${area.name} ${
+        area.clickedDescription
+      } at coords ${JSON.stringify(area.coords)} !`
     );
   };
 
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
+    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)}`);
   };
 
   const moveOnImage = (evt) => {
@@ -69,11 +73,7 @@ const app = (props) => {
 
   const enterArea = (area) => {
     setHoveredArea(area);
-    setMsg(
-      `You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
-        area.coords
-      )} !`
-    );
+    setMsg(`${area.hoverDescription}`);
   };
 
   const leaveArea = (area) => {
@@ -96,7 +96,7 @@ const app = (props) => {
         coords.x +
         ',"y":' +
         coords.y +
-        "} !"
+        "}"
     );
   };
 
@@ -221,7 +221,9 @@ const app = (props) => {
               width={500}
               onImageClick={(evt) => makeDot(evt)}
               onClick={(area, _, evt) => makeDot2(area, evt)}
+              onImageMouseMove={(evt) => moveOnImage(evt)}
             />
+            <div className="message">{moveMsg ? moveMsg : null}</div>
           </div>
           <div className="form">
             <div></div>
@@ -271,8 +273,7 @@ const app = (props) => {
                 {hoveredArea && hoveredArea.name}
               </span>
             )}
-            <div className="message">{msg ? msg : null}</div>
-            <div>{moveMsg ? moveMsg : null}</div>
+            <div className="userMessage">{msg ? msg : null}</div>
           </div>
         </div>
       </div>
