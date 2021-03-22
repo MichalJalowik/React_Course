@@ -13,6 +13,8 @@ const app = (props) => {
 
   const { register, handleSubmit } = useForm();
 
+  const imageName = "Modern art exbition";
+
   const basePolygonArea = [
     {
       name: "",
@@ -52,15 +54,17 @@ const app = (props) => {
 
   const clicked = (area) => {
     setMsg(
-      `You clicked on ${area.name} ${
-        area.clickedDescription
-      } at coords ${JSON.stringify(area.coords)} !`
+      `Clicked area: ${area.name} -> ${area.hoverDescription}. ${area.clickedDescription}`
     );
   };
 
   const clickedOutside = (evt) => {
     const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-    setMsg(`You clicked on the image at coords ${JSON.stringify(coords)}`);
+    setMsg(
+      `You clicked on the ${imageName} image at coords ${JSON.stringify(
+        coords
+      )}`
+    );
   };
 
   const moveOnImage = (evt) => {
@@ -73,16 +77,12 @@ const app = (props) => {
 
   const enterArea = (area) => {
     setHoveredArea(area);
-    setMsg(`${area.hoverDescription}`);
+    setMsg(`Entered: ${area.hoverDescription}`);
   };
 
   const leaveArea = (area) => {
     setHoveredArea(null);
-    setMsg(
-      `You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
-        area.coords
-      )} !`
-    );
+    setMsg(`Leaved: ${area.name}`);
   };
 
   const moveOnArea = (area, evt) => {
@@ -264,7 +264,7 @@ const app = (props) => {
               lineWidth={2}
               strokeColor={"rgba(255, 255, 255, 0.1)"}
             />
-
+            <div className="message">{moveMsg ? moveMsg : null}</div>
             {hoveredArea && (
               <span
                 className="tooltip"
@@ -273,9 +273,10 @@ const app = (props) => {
                 {hoveredArea && hoveredArea.name}
               </span>
             )}
-            <div className="userMessage">{msg ? msg : null}</div>
           </div>
         </div>
+
+        <div className="userMessage">{msg ? msg : null}</div>
       </div>
     </div>
   );
