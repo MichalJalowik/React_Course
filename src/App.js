@@ -7,14 +7,26 @@ import {
   TileLayer,
   ImageOverlay,
   Marker,
-  Popup
+  Popup,
+  Polygon
 } from "react-leaflet";
 
 const bounds = [
   [0, 0],
   [1000, 1000]
 ];
-const style = { height: "80vh", width: "75vw" };
+const purpleOptions = { color: "purple" };
+
+const polygon = [
+  [224, 100],
+  [315, 75],
+  [401, 193],
+  [139, 240],
+  [209, 208],
+  [313, 177],
+  [319, 130],
+  [291, 103]
+];
 
 const app = () => {
   return (
@@ -38,7 +50,7 @@ const app = () => {
           bounds={bounds}
           url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
         />
-
+        <Polygon pathOptions={purpleOptions} positions={polygon} />
         <Marker position={[100, 100]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
