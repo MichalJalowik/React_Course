@@ -5,10 +5,15 @@
 
 .leaflet-container {
   height: 300px;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .leaflet-div-icon {
   background: transparent;
   border: none;
+}
+
+.sr-only {
+  display: none;
 }
