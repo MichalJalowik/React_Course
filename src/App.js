@@ -12,6 +12,8 @@ import {
   FeatureGroup
 } from "react-leaflet";
 
+import EditControl from "./editControl";
+
 const bounds = [
   [0, 0],
   [1000, 1000]
@@ -30,6 +32,21 @@ const polygon = [
 ];
 
 const app = () => {
+  const [moveMsg, setMoveMsg] = useState("null");
+
+  const moveOnImage = (evt) => {
+    const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
+    setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)}`);
+  };
+
+  const onEdited = (e) => {
+    let numEdited = 0;
+    e.layers.eachLayer((layer) => {
+      numEdited += 1;
+    });
+    console.log(`_onEdited: edited ${numEdited} layers`, e);
+  };
+
   return (
     <div>
       <h1>React Leaflet</h1>
@@ -63,6 +80,17 @@ const app = () => {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+      </MapContainer>
+      <div>{moveMsg ? moveMsg : null}</div>
+
+      <MapContainer center={[37.8189, -122.4786]} zoom={13} zoomControl={false}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        />
+        <FeatureGroup>
+          <EditControl position="topright" onEdited={() => onEdited()} />
+        </FeatureGroup>
       </MapContainer>
     </div>
   );
