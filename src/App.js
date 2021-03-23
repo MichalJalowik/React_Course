@@ -10,6 +10,12 @@ import {
   Popup
 } from "react-leaflet";
 
+const bounds = [
+  [0, 0],
+  [1000, 1000]
+];
+const style = { height: "80vh", width: "75vw" };
+
 const app = () => {
   return (
     <div>
@@ -20,6 +26,20 @@ const app = () => {
           url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
         <Marker position={[51.505, -0.091]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+
+      <h1>React Leaflet Non-Geographical</h1>
+      <MapContainer crs={L.CRS.Simple} center={[100, 1000]} zoom={0}>
+        <ImageOverlay
+          bounds={bounds}
+          url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
+        />
+
+        <Marker position={[100, 100]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
