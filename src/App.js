@@ -8,7 +8,8 @@ import {
   ImageOverlay,
   Marker,
   Popup,
-  Polygon
+  Polygon,
+  FeatureGroup
 } from "react-leaflet";
 
 const bounds = [
@@ -50,7 +51,13 @@ const app = () => {
           bounds={bounds}
           url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
         />
-        <Polygon pathOptions={purpleOptions} positions={polygon} />
+
+        <FeatureGroup pathOptions={purpleOptions}>
+          <Popup>Popup in FeatureGroup</Popup>
+
+          <Polygon pathOptions={purpleOptions} positions={polygon} />
+        </FeatureGroup>
+
         <Marker position={[100, 100]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
