@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./App.css";
 import ImageMapper from "react-image-mapper";
+import { Map, ImageOverlay, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+
+var mymap = L.map("mapid").setView([51.505, -0.09], 13);
+
+const style = { height: "80vh", width: "75vw" };
 
 const app = (props) => {
   const [msg, setMsg] = useState(null);
