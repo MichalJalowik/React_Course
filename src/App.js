@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import L from "leaflet";
 import {
-  MapContainer,
+  Map,
   TileLayer,
   ImageOverlay,
   Marker,
@@ -12,10 +12,11 @@ import {
   FeatureGroup
 } from "react-leaflet";
 
-import EditControl from "./editControl";
+import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import "leaflet-draw";
+import { mapValues } from "lodash-es";
 
 const bounds = [
   [0, 0],
@@ -83,31 +84,19 @@ const app = () => {
   };
 
   const onCreated = (e) => {
-    //let layer = e.layer;
+    console.log(e);
+    console.log(editableFG);
 
-    // if (e.layerType === "marker") {
-    //   // Do marker specific actions
-    //   console.log("_onCreated: marker created", e);
-    // } else {
-    //   console.log("_onCreated: something else created:", e.layerType, e);
-    // }
-    // Do whatever else you need to. (save to db; etc)
-
-    // console.log(e);
-    // console.log(editableFG);
-
-    // const drawnItems = editableFG.leafletElement._layers;
-    // console.log(drawnItems);
-    // if (Object.keys(drawnItems).length > 1) {
-    //   Object.keys(drawnItems).forEach((layerid, index) => {
-    //     if (index > 0) return;
-    //     const layer = drawnItems[layerid];
-    //     editableFG.leafletElement.removeLayer(layer);
-    //   });
-    //   console.log(drawnItems);
-    // }
-
-    onChange();
+    const drawnItems = editableFG.leafletElement._layers;
+    console.log(drawnItems);
+    if (Object.keys(drawnItems).length > 1) {
+      Object.keys(drawnItems).forEach((layerid, index) => {
+        if (index > 0) return;
+        const layer = drawnItems[layerid];
+        editableFG.leafletElement.removeLayer(layer);
+      });
+      console.log(drawnItems);
+    }
   };
 
   const onDeleted = (e) => {
@@ -273,7 +262,7 @@ const app = () => {
   return (
     <div>
       <h1>React Leaflet</h1>
-      <MapContainer center={[51.505, -0.091]} zoom={13}>
+      <Map center={[51.505, -0.091]} zoom={13}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -283,10 +272,10 @@ const app = () => {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-      </MapContainer>
+      </Map>
 
       <h1>React Leaflet Non-Geographical</h1>
-      <MapContainer crs={L.CRS.Simple} center={[100, 1000]} zoom={0}>
+      <Map crs={L.CRS.Simple} center={[100, 1000]} zoom={0}>
         <ImageOverlay
           bounds={bounds}
           url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
@@ -303,35 +292,37 @@ const app = () => {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-      </MapContainer>
+      </Map>
 
       <h1>React Leaflet Draw</h1>
-      <MapContainer center={[37.8189, -122.4786]} zoom={13} zoomControl={false}>
+      <Map center={[37.8189, -122.4786]} zoom={13} zoomControl={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
-        <FeatureGroup>
-          ref=
-          {(reactFGref) => {
-            onFeatureGroupReady(reactFGref);
+        <FeatureGroup
+          ref={(featureGroupRef) => {
+            onFeatureGroupReady(featureGroupRef);
           }}
+        >
           <EditControl
             position="topright"
-            onEdited={() => onEdited()}
-            onCreated={() => onCreated()}
-            onDeleted={() => onDeleted()}
-            onMounted={() => onMounted()}
-            onEditStart={() => onEditStart()}
-            onEditStop={() => onEditStop()}
-            onDeleteStart={() => onDeleteStart()}
-            onDeleteStop={() => onDeleteStop()}
+            onCreated={(e) => onCreated(e)}
+            onMounted={(e) => onMounted(e)}
+            // onEdited={(e) => onEdited(e)}
+
+            // onDeleted={(e) => onDeleted(e)}
+
+            // onEditStart={() => onEditStart()}
+            // onEditStop={() => onEditStop()}
+            // onDeleteStart={() => onDeleteStart()}
+            // onDeleteStop={() => onDeleteStop()}
             draw={{
               rectangle: false
             }}
           />
         </FeatureGroup>
-      </MapContainer>
+      </Map>
     </div>
   );
 };
