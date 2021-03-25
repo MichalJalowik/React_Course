@@ -17,7 +17,7 @@ import EditControl from "./EditControl";
 
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
-import "leaflet-draw";
+//import "leaflet-draw";
 import { mapValues } from "lodash-es";
 
 const bounds = [

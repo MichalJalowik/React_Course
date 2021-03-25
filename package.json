@@ -7,6 +7,8 @@
     "@react-leaflet/core": "1.0.2",
     "leaflet": "1.7.1",
     "leaflet-draw": "1.0.4",
+    "leaflet-draw-toolbar": "0.3.0-alpha.1",
+    "leaflet-toolbar": "0.4.0-alpha.2",
     "lodash-es": "4.17.21",
     "prop-types": "15.7.2",
     "react": "17.0.1",
